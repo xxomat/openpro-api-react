@@ -11,7 +11,11 @@ import {
   ListBookingsParams,
   DossierWebhookAjout,
   DossierWebhookSuppr,
-  DossierWebhookListe
+  DossierWebhookListe,
+  ReponseTypeTarifAjout,
+  TypeTarifAjout,
+  TypeTarifModif,
+  RequeteTarifModif
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -82,13 +86,13 @@ export interface AdminSurface {
     payload: unknown
   ): Promise<void>;
   listRateTypes(idFournisseur: number): Promise<RateTypeListResponse>;
-  createRateType(idFournisseur: number, payload: import('./types').TypeTarifAjout): Promise<import('./types').ReponseTypeTarifAjout>;
-  updateRateType(idFournisseur: number, idTypeTarif: number, payload: import('./types').TypeTarifModif): Promise<void>;
+  createRateType(idFournisseur: number, payload: TypeTarifAjout): Promise<ReponseTypeTarifAjout>;
+  updateRateType(idFournisseur: number, idTypeTarif: number, payload: TypeTarifModif): Promise<void>;
   deleteRateType(idFournisseur: number, idTypeTarif: number): Promise<void>;
   linkRateTypeToAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   unlinkRateTypeFromAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<Record<string, unknown>>;
-  setRates(idFournisseur: number, idHebergement: number, payload: import('./types').RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
+  setRates(idFournisseur: number, idHebergement: number, payload: RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
   listWebhooks(): Promise<DossierWebhookListe>;
   addWebhook(payload: DossierWebhookAjout): Promise<Record<string, unknown>>;
   deleteWebhook(payload: DossierWebhookSuppr): Promise<Record<string, unknown>>;
