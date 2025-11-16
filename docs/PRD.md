@@ -177,7 +177,157 @@ Référence produit:
   - SDK: passer `baseUrl: 'http://localhost:3000'` et n’importe quelle `apiKey` (le stub l’ignore).
   - Playground: saisir la même Base URL et des IDs simples (ex: `idFournisseur=47186`, `idHebergement=1`).
 - Évolutions: le dataset peut être enrichi/complexifié ultérieurement en éditant `stub-server/stub-data.json`.
-- Objectif à venir: complexifier le dataset pour refléter des scénarios réels (hébergements variés, saisons/périodes, règles de tarification, variations de stock, dossiers plausibles). Une stratégie détaillée sera fournie et appliquée dans le fichier versionné `stub-server/stub-data.json`.
+-- Objectif à venir: complexifier le dataset pour refléter des scénarios réels (hébergements variés, saisons/périodes, règles de tarification, variations de stock, dossiers plausibles). Une stratégie détaillée sera fournie et appliquée dans le fichier versionné `stub-server/stub-data.json`.
+
+### Stratégie de données pour le dataset (éditable)
+Note: les modifications persistent dans `stub-server/stub-data.json`. Le format ci-dessous est volontairement structuré pour édition/automatisation.
+
+```json
+{
+  "fournisseurs": [
+    { "idFournisseur": 47186, "nom": "La Becterie" },
+    { "idFournisseur": 55123, "nom": "Un gite Dans le Cotentin" },
+    { "idFournisseur": 99999, "nom": "Fournisseur factice (hébergement sans dispo)" }
+  ],
+  "hebergements": {
+    "47186": [
+      { "idHebergement": 1, "nom": "Noirmoutier" },
+      { "idHebergement": 2, "nom": "Ceylan" },
+      { "idHebergement": 3, "nom": "Porquerolles" }
+    ],
+    "55123": [
+      { "idHebergement": 1, "nom": "Maison complète" }
+    ],
+    "99999": [
+      { "idHebergement": 1, "nom": "Hébergement non existant" }
+    ]
+  },
+  "typesTarif": {
+    "47186": [
+      {
+        "idTypeTarif": 1001,
+        "libelle": [
+          { "langue": "fr", "texte": "Tarif public" },
+          { "langue": "en", "texte": "Public rate" },
+          { "langue": "de", "texte": "Öffentlicher Tarif" },
+          { "langue": "es", "texte": "Tarifa pública" },
+          { "langue": "it", "texte": "Tariffa pubblica" }
+        ],
+        "description": [
+          { "langue": "fr", "texte": "Tarif public annulable sans frais jusqu'au jour de votre arrivée" },
+          { "langue": "en", "texte": "Cancelable free of charge until the day of arrival" },
+          { "langue": "de", "texte": "Kostenlos stornierbar bis zum Anreisetag" },
+          { "langue": "es", "texte": "Cancelable sin coste hasta el día de llegada" },
+          { "langue": "it", "texte": "Annullabile gratuitamente fino al giorno di arrivo" }
+        ],
+        "ordre": 1
+      },
+      {
+        "idTypeTarif": 1002,
+        "libelle": [
+          { "langue": "fr", "texte": "Promo non remboursable non annulable" },
+          { "langue": "en", "texte": "Non-refundable non-cancellable promo" },
+          { "langue": "de", "texte": "Nicht erstattbare, nicht stornierbare Aktion" },
+          { "langue": "es", "texte": "Promoción no reembolsable y no cancelable" },
+          { "langue": "it", "texte": "Promo non rimborsabile e non annullabile" }
+        ],
+        "description": [
+          { "langue": "fr", "texte": "Tarif promotionnel non remboursable" },
+          { "langue": "en", "texte": "Promotional non-refundable rate" },
+          { "langue": "de", "texte": "Promotionspreis, nicht erstattbar" },
+          { "langue": "es", "texte": "Tarifa promocional no reembolsable" },
+          { "langue": "it", "texte": "Tariffa promozionale non rimborsabile" }
+        ],
+        "ordre": 2
+      },
+      {
+        "idTypeTarif": 1003,
+        "libelle": [
+          { "langue": "fr", "texte": "Séjour en pension complète" },
+          { "langue": "en", "texte": "Full-board stay" },
+          { "langue": "de", "texte": "Vollpension-Aufenthalt" },
+          { "langue": "es", "texte": "Estancia en pensión completa" },
+          { "langue": "it", "texte": "Soggiorno in pensione completa" }
+        ],
+        "description": [
+          { "langue": "fr", "texte": "Profitez du déjeuner et du dîner" },
+          { "langue": "en", "texte": "Includes lunch and dinner" },
+          { "langue": "de", "texte": "Beinhaltet Mittag- und Abendessen" },
+          { "langue": "es", "texte": "Incluye almuerzo y cena" },
+          { "langue": "it", "texte": "Include pranzo e cena" }
+        ],
+        "ordre": 3
+      }
+    ],
+    "55123": [
+      {
+        "idTypeTarif": 1101,
+        "libelle": [
+          { "langue": "fr", "texte": "Tarif public" },
+          { "langue": "en", "texte": "Public rate" },
+          { "langue": "de", "texte": "Öffentlicher Tarif" },
+          { "langue": "es", "texte": "Tarifa pública" },
+          { "langue": "it", "texte": "Tariffa pubblica" }
+        ],
+        "description": [
+          { "langue": "fr", "texte": "Tarif public annulable sans frais jusqu'au jour de votre arrivée" },
+          { "langue": "en", "texte": "Cancelable free of charge until the day of arrival" },
+          { "langue": "de", "texte": "Kostenlos stornierbar bis zum Anreisetag" },
+          { "langue": "es", "texte": "Cancelable sin coste hasta el día de llegada" },
+          { "langue": "it", "texte": "Annullabile gratuitamente fino al giorno di arrivo" }
+        ],
+        "ordre": 1
+      }
+    ],
+    "99999": []
+  },
+  "liaisonsTypeTarifHebergement": {
+    "47186:1": [1001, 1003],
+    "47186:2": [1001],
+    "47186:3": [1001, 1003],
+    "55123:1": [1101],
+    "99999:1": []
+  },
+  "stock": {
+    "politique": "2025-01-01 → 2026-12-31",
+    "formatEcriture": { "jours": [{ "date": "YYYY-MM-DD", "dispo": 0 }] },
+    "formatLecture": { "jours": [{ "date": "YYYY-MM-DD", "dispo": 0 }] },
+    "exigences": [
+      "Pour 47186 et 55123: stock = 1 pour toutes les dates 2025–2026",
+      "Pour 99999: stock = 0 (ou aucun jour) pour simuler l'absence de dispo"
+    ]
+  },
+  "tarifs": {
+    "formatPeriode": {
+      "idTypeTarif": 0,
+      "debut": "YYYY-MM-DD",
+      "fin": "YYYY-MM-DD",
+      "ouvert": true,
+      "dureeMin": 1,
+      "dureeMax": 30,
+      "arriveeAutorisee": true,
+      "departAutorise": true,
+      "tarifPax": { "listeTarifPaxOccupation": [{ "type": "base", "nbPers": 2, "prix": 100 }] }
+    },
+    "valeurs": {
+      "47186:1": [
+        { "idTypeTarif": 1001, "debut": "2025-01-01", "fin": "2025-12-31", "ouvert": true, "dureeMin": 1, "dureeMax": 30, "arriveeAutorisee": true, "departAutorise": true, "tarifPax": { "listeTarifPaxOccupation": [ { "type": "base", "nbPers": 2, "prix": 84 } ] } }
+      ],
+      "47186:2": [
+        { "idTypeTarif": 1001, "debut": "2025-01-01", "fin": "2025-12-31", "ouvert": true, "dureeMin": 1, "dureeMax": 30, "arriveeAutorisee": true, "departAutorise": true, "tarifPax": { "listeTarifPaxOccupation": [ { "type": "base", "nbPers": 2, "prix": 94 } ] } }
+      ],
+      "47186:3": [
+        { "idTypeTarif": 1001, "debut": "2025-01-01", "fin": "2025-12-31", "ouvert": true, "dureeMin": 1, "dureeMax": 30, "arriveeAutorisee": true, "departAutorise": true, "tarifPax": { "listeTarifPaxOccupation": [ { "type": "occupation", "nbPers": 1, "prix": 100 }, { "type": "occupation", "nbPers": 2, "prix": 130 }, { "type": "occupation", "nbPers": 3, "prix": 140 }, { "type": "occupation", "nbPers": 4, "prix": 145 } ] } },
+        { "idTypeTarif": 1003, "debut": "2025-01-01", "fin": "2025-12-31", "ouvert": true, "dureeMin": 1, "dureeMax": 30, "arriveeAutorisee": true, "departAutorise": true, "tarifPax": { "listeTarifPaxOccupation": [ { "type": "pension_complete", "nbPers": 2, "prix": 180 } ] } }
+      ],
+      "55123:1": [
+        { "idTypeTarif": 1101, "debut": "2025-01-01", "fin": "2025-12-31", "ouvert": true, "dureeMin": 1, "dureeMax": 30, "arriveeAutorisee": true, "departAutorise": true, "tarifPax": { "listeTarifPaxOccupation": [ { "type": "base", "nbPers": 4, "prix": 350 } ] } }
+      ],
+      "99999:1": []
+    }
+  }
+}
+```
 
 ## Critères de succès (MVP)
 - Wrapper publié (localement) et utilisable dans React et Astro.

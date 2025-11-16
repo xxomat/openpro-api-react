@@ -178,6 +178,58 @@ export function App() {
         </ul>
       </div>
 
+      {/* Quick presets for fournisseurs/hébergements (from stub dataset) */}
+      <div style={{ marginTop: 12, color: '#555' }}>
+        Presets (idFournisseur / idHebergement):
+        <ul style={{ marginTop: 8 }}>
+          <li>
+            La Becterie — Noirmoutier (47186 / 1)
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => { setIdFournisseur('47186'); setIdHebergement('1'); }}
+            >
+              Set
+            </button>
+          </li>
+          <li>
+            La Becterie — Ceylan (47186 / 2)
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => { setIdFournisseur('47186'); setIdHebergement('2'); }}
+            >
+              Set
+            </button>
+          </li>
+          <li>
+            La Becterie — Porquerolles (47186 / 3)
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => { setIdFournisseur('47186'); setIdHebergement('3'); }}
+            >
+              Set
+            </button>
+          </li>
+          <li>
+            Un gite Dans le Cotentin — Maison complète (55123 / 1)
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => { setIdFournisseur('55123'); setIdHebergement('1'); }}
+            >
+              Set
+            </button>
+          </li>
+          <li>
+            Fournisseur factice — Hébergement non existant (99999 / 1)
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => { setIdFournisseur('99999'); setIdHebergement('1'); }}
+            >
+              Set
+            </button>
+          </li>
+        </ul>
+      </div>
+
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
         <button
