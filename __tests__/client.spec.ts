@@ -119,6 +119,30 @@ describe('OpenProClient', () => {
     expect(res).toEqual({ warnings: [] });
     expect(mockFetch).toHaveBeenCalledTimes(1);
   });
+
+  it('listWebhooks returns list', async () => {
+    mockFetch.mockResolvedValueOnce(jsonOk({ webhooks: [{ url: 'https://x', emailAlerte: 'a@b.c' }] }));
+    const client = createOpenProClient('admin', {
+      baseUrl: 'https://example.test',
+      apiKey: 'key'
+    });
+    const res = await client.listWebhooks();
+    expect(res).toEqual({ webhooks: [{ url: 'https://x', emailAlerte: 'a@b.c' }] });
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('listBookings forwards query params', async () => {
+    mockFetch.mockResolvedValueOnce(jsonOk({ dossiers: [], pageCourante: 2 }));
+    const client = createOpenProClient('customer', {
+      baseUrl: 'https://example.test',
+      apiKey: 'key'
+    });
+    const res = await client.listBookings(1, { page: 2, nbParPage: 10 });
+    expect(res.pageCourante).toBe(2);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    const calledUrl: string = mockFetch.mock.calls[0][0];
+    expect(calledUrl).toContain('/fournisseur/1/dossiers?');
+  });
 });
 
 

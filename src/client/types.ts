@@ -29,9 +29,12 @@ export type AccommodationListResponse = {
 };
 
 export type BookingListResponse = {
-  // shape to be refined per API; keep unknown-safe for now
   dossiers?: unknown[];
-} & Record<string, unknown>;
+  // common listing scaffolding from Swagger (kept optional)
+  nbTotal?: number;
+  pageCourante?: number;
+  nbPages?: number;
+};
 
 export type BookingDetailResponse = Record<string, unknown>;
 
@@ -91,6 +94,32 @@ export type TarifModif = {
 
 export type RequeteTarifModif = {
   tarifs: TarifModif[];
+};
+
+// Dossiers list query params (subset from Swagger)
+export type ListBookingsParams = {
+  dateCreationDepuis?: string;    // date-time
+  dateCreationJusqua?: string;    // date-time
+  dateModificationDepuis?: string;// date-time
+  dateModificationJusqua?: string;// date-time
+  page?: number;
+  nbParPage?: number;
+};
+
+// Webhook types
+export type DossierWebhookAjout = {
+  // exact fields per Swagger RequeteDossierWebhookAjout
+  url: string;
+  emailAlerte?: string;
+};
+
+export type DossierWebhookSuppr = {
+  // per Swagger RequeteDossierWebhookSuppr (identifier fields)
+  url: string;
+};
+
+export type DossierWebhookListe = {
+  webhooks?: Array<{ url: string; emailAlerte?: string }>;
 };
 
 

@@ -7,7 +7,11 @@ import {
   BookingListResponse,
   BookingDetailResponse,
   RateTypeListResponse,
-  RatesResponse
+  RatesResponse,
+  ListBookingsParams,
+  DossierWebhookAjout,
+  DossierWebhookSuppr,
+  DossierWebhookListe
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -62,7 +66,7 @@ function unwrapOk<T>(resp: ApiResponse<T>): T {
 // Read-only surface available to both roles
 export interface CustomerSurface {
   listAccommodations(idFournisseur: number): Promise<AccommodationListResponse>;
-  listBookings(idFournisseur: number, params?: Record<string, unknown>): Promise<BookingListResponse>;
+  listBookings(idFournisseur: number, params?: ListBookingsParams): Promise<BookingListResponse>;
   getBooking(idFournisseur: number, idDossier: number): Promise<BookingDetailResponse>;
   getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>): Promise<RatesResponse>;
   getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }): Promise<Record<string, unknown>>;
@@ -85,9 +89,9 @@ export interface AdminSurface {
   unlinkRateTypeFromAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<Record<string, unknown>>;
   setRates(idFournisseur: number, idHebergement: number, payload: import('./types').RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
-  listWebhooks(): Promise<Record<string, unknown>>;
-  addWebhook(payload: Record<string, unknown>): Promise<Record<string, unknown>>;
-  deleteWebhook(payload: Record<string, unknown>): Promise<Record<string, unknown>>;
+  listWebhooks(): Promise<DossierWebhookListe>;
+  addWebhook(payload: DossierWebhookAjout): Promise<Record<string, unknown>>;
+  deleteWebhook(payload: DossierWebhookSuppr): Promise<Record<string, unknown>>;
 }
 
 export type ClientByRole<R extends Role> = R extends 'customer'
