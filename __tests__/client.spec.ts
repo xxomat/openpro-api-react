@@ -45,6 +45,23 @@ describe('OpenProClient', () => {
 
     await expect(client.listAccommodations(1)).rejects.toThrow();
   });
+
+  it('listBookings returns data', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ ok: 1, data: { dossiers: [] } })
+    });
+
+    const client = createOpenProClient('customer', {
+      baseUrl: 'https://example.test',
+      apiKey: 'key'
+    });
+
+    const data = await client.listBookings(1);
+    expect(data).toEqual({ dossiers: [] });
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
 });
 
 

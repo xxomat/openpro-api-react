@@ -28,7 +28,11 @@ export type AccommodationListResponse = {
   listeHebergement: AccommodationHeader[];
 };
 
-export type BookingListResponse = unknown;
-export type BookingDetailResponse = unknown;
+export type BookingListResponse = {
+  // shape to be refined per API; keep unknown-safe for now
+  dossiers?: unknown[];
+} & Record<string, unknown>;
+
+export type BookingDetailResponse = Record<string, unknown>;
 
 

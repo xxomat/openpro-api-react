@@ -3,7 +3,9 @@ import {
   AccommodationListResponse,
   ApiResponse,
   OkResponse,
-  OpenProClientConfig
+  OpenProClientConfig,
+  BookingListResponse,
+  BookingDetailResponse
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -47,6 +49,8 @@ function unwrapOk<T>(resp: ApiResponse<T>): T {
 // Read-only surface available to both roles
 export interface CustomerSurface {
   listAccommodations(idFournisseur: number): Promise<AccommodationListResponse>;
+  listBookings(idFournisseur: number, params?: Record<string, unknown>): Promise<BookingListResponse>;
+  getBooking(idFournisseur: number, idDossier: number): Promise<BookingDetailResponse>;
   // TODO: add read endpoints required by the widget (bookings, rates reading if provided)
 }
 
@@ -73,6 +77,23 @@ export function createOpenProClient<R extends Role>(
       const resp = await requestJson<ApiResponse<AccommodationListResponse>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async listBookings(idFournisseur: number, params?: Record<string, unknown>) {
+      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const resp = await requestJson<ApiResponse<BookingListResponse>>(
+        config,
+        `/fournisseur/${idFournisseur}/dossiers${search}`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async getBooking(idFournisseur: number, idDossier: number) {
+      const resp = await requestJson<ApiResponse<BookingDetailResponse>>(
+        config,
+        `/fournisseur/${idFournisseur}/dossiers/${idDossier}`,
         { method: 'GET' }
       );
       return unwrapOk(resp);
