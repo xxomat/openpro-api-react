@@ -122,6 +122,16 @@ app.post('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
   });
 });
 
+// GET /fournisseur/{idFournisseur}/typetarifs (list rate types)
+app.get('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
+  const { idFournisseur } = req.params;
+  const list = db.rateTypes[String(idFournisseur)] || [];
+  res.json({
+    ok: 1,
+    data: { typeTarifs: list }
+  });
+});
+
 // PUT /fournisseur/{idFournisseur}/typetarifs/{idTypeTarif}  (update rate type)
 app.put('/fournisseur/:idFournisseur/typetarifs/:idTypeTarif', (req, res) => {
   const { idFournisseur, idTypeTarif } = req.params;
