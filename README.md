@@ -69,6 +69,63 @@ Type safety:
 - Actions included: list accommodations, list bookings, get booking.
 - Warning: do not expose production keys in the browser; use sandbox only.
 
+## Local stub server (fake data)
+Run a local mock API compatible with the client. Useful to try the Playground without a real key.
+
+1) Install deps (once):
+```bash
+npm i
+```
+This installs both app and stub server deps (`express`, `cors`).
+
+2) Start the stub server:
+```bash
+npm run stub
+```
+It listens on `http://localhost:3000`.
+
+3) In the Playground:
+- Base URL: `http://localhost:3000` (no trailing slash)
+- API Key: any string (stub ignores it)
+- idFournisseur: e.g. `47186`
+- idDossier: e.g. `123`
+- idHebergement: e.g. `1`
+
+Implemented endpoints and shapes (match `{ ok: 1, data: ... }`):
+- `GET /fournisseur/:idFournisseur/hebergements`
+- `GET /fournisseur/:idFournisseur/dossiers`
+- `GET /fournisseur/:idFournisseur/dossiers/:idDossier`
+- `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/stock`
+- `GET /fournisseur/:idFournisseur/hebergements/:idHebergement/stock` (returns in-memory fake stock; supports `start`, `end` query)
+- `POST /fournisseur/:idFournisseur/typetarifs`
+- `PUT /fournisseur/:idFournisseur/typetarifs/:idTypeTarif`
+- `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:idTypeTarif`
+- `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif`
+- `GET /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif` (helper for reading sample rates)
+
+Files: `stub-server/server.js`, `stub-server/stub-data.json`
+
+Stock behavior:
+- The stub seeds a few upcoming days with `dispo` values per `(idFournisseur, idHebergement)`.
+- `POST /stock` merges provided `jours` by date into the in-memory dataset.
+- `GET /stock` returns the current dataset, optionally sliced by `start`/`end`.
+
+## Persistent fake data (file-backed)
+The stub server reads and writes fake data from `stub-server/stub-data.json`. This file is versioned in git so you can evolve the dataset over time.
+
+- Edit `stub-server/stub-data.json` to add hebergements, dossiers, stock, rate types, or rates.
+- Write operations (rate type create/update, set rates, update stock) persist back to this file.
+- To reset, restore `stub-server/stub-data.json` (e.g., `git restore stub-server/stub-data.json`). You may need to restart the stub if schema changes.
+
+### Run the stub server
+From the project root:
+```bash
+npm install   # once
+npm run stub  # starts http://localhost:3000
+```
+
+Then in the Playground, set Base URL to `http://localhost:3000`. The stub ignores the API key.
+
 ## Project structure
 ```
 /src/client

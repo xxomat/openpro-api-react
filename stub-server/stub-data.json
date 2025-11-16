@@ -1,0 +1,39 @@
+{
+  "hebergements": {
+    "47186": [
+      { "cleHebergement": 1, "nom": "Demo Lodge" },
+      { "cleHebergement": 2, "nom": "Sample Cabin" }
+    ]
+  },
+  "dossiers": {
+    "47186": [
+      { "idDossier": 123, "statut": "CONFIRMED", "client": { "nom": "Doe", "prenom": "Jane" }, "lignes": [] },
+      { "idDossier": 124, "statut": "PENDING", "client": { "nom": "Dupont", "prenom": "Jean" }, "lignes": [] }
+    ]
+  },
+  "stock": {
+    "47186:1": {
+      "jours": []
+    },
+    "47186:2": {
+      "jours": []
+    }
+  },
+  "rateTypes": {
+    "47186": [
+      { "idTypeTarif": 1001, "nom": "Standard" }
+    ]
+  },
+  "rates": {
+    "47186:1": {
+      "periodes": [
+        { "debut": "2025-06-01", "fin": "2025-06-30", "prix": 120.0 },
+        { "debut": "2025-07-01", "fin": "2025-08-31", "prix": 160.0 }
+      ]
+    }
+  },
+  "_meta": {
+    "note": "This file is versioned and used by the stub server for persistent fake data. Edit freely."
+  }
+}
+
