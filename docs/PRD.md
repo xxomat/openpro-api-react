@@ -163,6 +163,9 @@ Référence produit:
 
 ## Références
 - Open Pro — API Multi v1: `https://documentation.open-system.fr/api-openpro/tarif/multi/v1/`
-- Swagger: à intégrer ici (URL fournie par Alliance-Réseaux; aussi accessible depuis la page “Swagger” de la doc).
+- Swagger (schema): `https://api.open-pro.fr/tarif/multi/v1/v1/swagger`
+  - Host: `api.open-pro.fr`
+  - BasePath: `/tarif/multi/v1`
+  - Security: `Authorization: OsApiKey <KEY>` (apiKey in header)
 
 
