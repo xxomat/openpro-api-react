@@ -147,6 +147,28 @@ Référence produit:
 - Affichage: code de statut, timing, corps JSON, erreurs.
 - Sécurité: avertissement sur l’usage de la clé côté navigateur.
 
+## Serveur stub local (API factice)
+- Objectif: permettre le développement et les démos sans clé réelle, avec un petit serveur Express qui émule les endpoints principaux et renvoie `{ ok: 1, data: ... }`.
+- Démarrage:
+  - Installer les dépendances (une fois): `npm install`
+  - Lancer: `npm run stub` → écoute sur `http://localhost:3000`
+- Base URL (SDK/Playground): `http://localhost:3000` (sans slash final).
+- Données persistées: fichier `stub-server/stub-data.json` (hébergements, dossiers, stock, types de tarif, tarifs). Les opérations d’écriture mettent à jour ce fichier.
+- Versionning des données: le fichier `stub-server/stub-data.json` est versionné dans le dépôt; les évolutions du jeu de données doivent passer par des commits/PRs modifiant ce fichier.
+- Endpoints couverts (exemples):
+  - `GET /fournisseur/:idFournisseur/hebergements`
+  - `GET /fournisseur/:idFournisseur/dossiers`
+  - `GET /fournisseur/:idFournisseur/dossiers/:idDossier`
+  - `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/stock` (+ `GET` de lecture)
+  - `POST /fournisseur/:idFournisseur/typetarifs`
+  - `PUT /fournisseur/:idFournisseur/typetarifs/:idTypeTarif`
+  - `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:idTypeTarif`
+  - `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif` (+ `GET` helper de lecture)
+- Intégration:
+  - SDK: passer `baseUrl: 'http://localhost:3000'` et n’importe quelle `apiKey` (le stub l’ignore).
+  - Playground: saisir la même Base URL et des IDs simples (ex: `idFournisseur=47186`, `idHebergement=1`).
+- Évolutions: le dataset peut être enrichi/complexifié ultérieurement en éditant `stub-server/stub-data.json`.
+
 ## Critères de succès (MVP)
 - Wrapper publié (localement) et utilisable dans React et Astro.
 - Opérations clés fonctionnelles avec mocks + testées en sandbox manuelle via le playground.
