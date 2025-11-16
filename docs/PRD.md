@@ -140,6 +140,15 @@ Référence produit:
 - Mode live (désactivé par défaut):
   - Nécessite `OPENPRO_API_KEY` et `OPENPRO_BASE_URL` (sandbox).
   - Tests marqués `it.live` et exclus par défaut.
+### Nouvelles exigences de tests (basées sur le stub)
+- Ajouter des cas de tests supplémentaires qui consomment les données du serveur stub afin de valider des parcours “réalistes” (sans supprimer les tests existants).
+- Les tests devront lire/utiliser le jeu de données fourni par `stub-server/stub-data.json` (fichier versionné), soit en pointant le client vers `http://localhost:3000`, soit via des helpers qui chargent des extraits de ce fichier pour assertions.
+- Objectifs de couverture (indicatifs):
+  - Hébergements: présence de plusieurs hébergements aux caractéristiques distinctes.
+  - Types de tarif et tarifs: création/mise à jour/liaison, périodes et variations de prix.
+  - Stock: variations par date, consolidation, bornes `start`/`end`.
+  - Dossiers de réservation: liste et détail avec données cohérentes.
+- Les nouveaux tests ne doivent pas retirer ni casser les tests en place; ils étendent la couverture en s’appuyant sur le dataset du stub.
 
 ## Page web de test (Playground)
 - Saisie: baseURL, apiKey, idFournisseur, idHebergement, idTypeTarif, idDossier.
@@ -168,6 +177,7 @@ Référence produit:
   - SDK: passer `baseUrl: 'http://localhost:3000'` et n’importe quelle `apiKey` (le stub l’ignore).
   - Playground: saisir la même Base URL et des IDs simples (ex: `idFournisseur=47186`, `idHebergement=1`).
 - Évolutions: le dataset peut être enrichi/complexifié ultérieurement en éditant `stub-server/stub-data.json`.
+- Objectif à venir: complexifier le dataset pour refléter des scénarios réels (hébergements variés, saisons/périodes, règles de tarification, variations de stock, dossiers plausibles). Une stratégie détaillée sera fournie et appliquée dans le fichier versionné `stub-server/stub-data.json`.
 
 ## Critères de succès (MVP)
 - Wrapper publié (localement) et utilisable dans React et Astro.
