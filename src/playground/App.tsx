@@ -18,6 +18,8 @@ export function App() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [lastType, setLastType] = React.useState<null | 'accommodations' | 'bookings' | 'booking' | 'rates' | 'stock'>(null);
   const [lastData, setLastData] = React.useState<unknown>(null);
+  const [activeTab, setActiveTab] = React.useState<'customer' | 'admin'>('customer');
+  const [adminStockPayload, setAdminStockPayload] = React.useState<string>('{\n  "jours": [\n    { "date": "2025-06-01", "dispo": 3 },\n    { "date": "2025-06-02", "dispo": 2 }\n  ]\n}');
 
   const handleListAccommodations = async () => {
     setLoading(true);
@@ -79,8 +81,6 @@ export function App() {
     }
   };
 
-  // listRateTypes is admin-only and not exposed in the customer playground
-
   const handleGetRates = async () => {
     setLoading(true);
     setOutput('');
@@ -121,12 +121,78 @@ export function App() {
     }
   };
 
+  // --- Admin handlers ---
+  const handleAdminListRateTypes = async () => {
+    setLoading(true);
+    setOutput('');
+    try {
+      const client = createOpenProClient('admin', { baseUrl, apiKey });
+      const res = await client.listRateTypes(Number(idFournisseur));
+      setOutput(JSON.stringify(res, null, 2));
+    } catch (e) {
+      setOutput(String(e));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdminUpdateStock = async () => {
+    setLoading(true);
+    setOutput('');
+    try {
+      const client = createOpenProClient('admin', { baseUrl, apiKey });
+      const payload = JSON.parse(adminStockPayload);
+      await client.updateStock(Number(idFournisseur), Number(idHebergement), payload);
+      setOutput('{"ok":1,"data":{"saved":true}}');
+    } catch (e) {
+      setOutput(String(e));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ padding: 16, fontFamily: 'sans-serif', maxWidth: 900, margin: '0 auto' }}>
-      <h1>OpenPro Playground (Customer)</h1>
-      <p style={{ color: '#555' }}>
-        Use sandbox credentials. Do not expose production keys in the browser.
-      </p>
+      <h1>OpenPro Playground</h1>
+      <div style={{ color: '#555' }}>
+        Base URL examples:
+        <ul style={{ marginTop: 8 }}>
+          <li>
+            Stub server: http://localhost:3000
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => setBaseUrl('http://localhost:3000')}
+            >
+              Set URL
+            </button>
+          </li>
+          <li>
+            OpenPro: https://api.open-pro.fr/tarif/multi/v1
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => setBaseUrl('https://api.open-pro.fr/tarif/multi/v1')}
+            >
+              Set URL
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+        <button
+          onClick={() => setActiveTab('customer')}
+          style={{ padding: '6px 12px', border: '1px solid #ddd', background: activeTab === 'customer' ? '#e8f0fe' : '#fff' }}
+        >
+          Customer
+        </button>
+        <button
+          onClick={() => setActiveTab('admin')}
+          style={{ padding: '6px 12px', border: '1px solid #ddd', background: activeTab === 'admin' ? '#e8f0fe' : '#fff' }}
+        >
+          Admin
+        </button>
+      </div>
 
       <div style={{ display: 'grid', gap: 8, maxWidth: 640 }}>
         <label>
@@ -176,24 +242,48 @@ export function App() {
         </label>
       </div>
 
-      <div style={{ marginTop: 12 }}>
-        <button onClick={handleListAccommodations} disabled={loading || !baseUrl || !apiKey || !idFournisseur}>
-          {loading ? 'Loading...' : 'List accommodations'}
-        </button>
-        <button style={{ marginLeft: 8 }} onClick={handleListBookings} disabled={loading || !baseUrl || !apiKey || !idFournisseur}>
-          {loading ? 'Loading...' : 'List bookings'}
-        </button>
-        <button style={{ marginLeft: 8 }} onClick={handleGetBooking} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idDossier}>
-          {loading ? 'Loading...' : 'Get booking'}
-        </button>
-        {/* Admin-only: listRateTypes not available in customer playground */}
-        <button style={{ marginLeft: 8 }} onClick={handleGetRates} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idHebergement}>
-          {loading ? 'Loading...' : 'Get rates'}
-        </button>
-        <button style={{ marginLeft: 8 }} onClick={handleGetStock} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idHebergement}>
-          {loading ? 'Loading...' : 'Get stock'}
-        </button>
-      </div>
+      {activeTab === 'customer' && (
+        <div style={{ marginTop: 12 }}>
+          <button onClick={handleListAccommodations} disabled={loading || !baseUrl || !apiKey || !idFournisseur}>
+            {loading ? 'Loading...' : 'List accommodations'}
+          </button>
+          <button style={{ marginLeft: 8 }} onClick={handleListBookings} disabled={loading || !baseUrl || !apiKey || !idFournisseur}>
+            {loading ? 'Loading...' : 'List bookings'}
+          </button>
+          <button style={{ marginLeft: 8 }} onClick={handleGetBooking} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idDossier}>
+            {loading ? 'Loading...' : 'Get booking'}
+          </button>
+          <button style={{ marginLeft: 8 }} onClick={handleGetRates} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idHebergement}>
+            {loading ? 'Loading...' : 'Get rates'}
+          </button>
+          <button style={{ marginLeft: 8 }} onClick={handleGetStock} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idHebergement}>
+            {loading ? 'Loading...' : 'Get stock'}
+          </button>
+        </div>
+      )}
+
+      {activeTab === 'admin' && (
+        <div style={{ marginTop: 12 }}>
+          <div style={{ display: 'grid', gap: 8, maxWidth: 640 }}>
+            <label>
+              Stock payload (JSON)
+              <textarea
+                style={{ width: '100%', minHeight: 120, fontFamily: 'monospace' }}
+                value={adminStockPayload}
+                onChange={e => setAdminStockPayload(e.target.value)}
+              />
+            </label>
+          </div>
+          <div style={{ marginTop: 8 }}>
+            <button onClick={handleAdminListRateTypes} disabled={loading || !baseUrl || !apiKey || !idFournisseur}>
+              {loading ? 'Loading...' : 'List rate types'}
+            </button>
+            <button style={{ marginLeft: 8 }} onClick={handleAdminUpdateStock} disabled={loading || !baseUrl || !apiKey || !idFournisseur || !idHebergement}>
+              {loading ? 'Loading...' : 'Update stock (POST)'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Quick formatted summary */}
       <div style={{ marginTop: 16, padding: 12, background: '#fbfbfb', border: '1px solid #eee' }}>
