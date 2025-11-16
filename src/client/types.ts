@@ -35,4 +35,22 @@ export type BookingListResponse = {
 
 export type BookingDetailResponse = Record<string, unknown>;
 
+export type RateType = {
+  idTypeTarif: number;
+  libelle?: unknown;
+  description?: unknown;
+  ordre?: number;
+} & Record<string, unknown>;
+
+export type RateTypeListResponse = {
+  // per Swagger ReponseTypeTarifListe -> data.typeTarifs
+  typeTarifs?: RateType[];
+} & Record<string, unknown>;
+
+export type Tarif = Record<string, unknown>;
+export type RatesResponse = {
+  // per Swagger ReponseTarifListe -> data.tarifs
+  tarifs?: Tarif[];
+} & Record<string, unknown>;
+
 

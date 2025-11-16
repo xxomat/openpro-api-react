@@ -62,6 +62,23 @@ describe('OpenProClient', () => {
     expect(data).toEqual({ dossiers: [] });
     expect(mockFetch).toHaveBeenCalledTimes(1);
   });
+
+  it('listRateTypes returns data', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ ok: 1, data: { typeTarifs: [] } })
+    });
+
+    const client = createOpenProClient('customer', {
+      baseUrl: 'https://example.test',
+      apiKey: 'key'
+    });
+
+    const data = await client.listRateTypes(1);
+    expect(data).toEqual({ typeTarifs: [] });
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
 });
 
 

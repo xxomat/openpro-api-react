@@ -5,7 +5,9 @@ import {
   OkResponse,
   OpenProClientConfig,
   BookingListResponse,
-  BookingDetailResponse
+  BookingDetailResponse,
+  RateTypeListResponse,
+  RatesResponse
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -51,6 +53,8 @@ export interface CustomerSurface {
   listAccommodations(idFournisseur: number): Promise<AccommodationListResponse>;
   listBookings(idFournisseur: number, params?: Record<string, unknown>): Promise<BookingListResponse>;
   getBooking(idFournisseur: number, idDossier: number): Promise<BookingDetailResponse>;
+  getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>): Promise<RatesResponse>;
+  getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }): Promise<Record<string, unknown>>;
   // TODO: add read endpoints required by the widget (bookings, rates reading if provided)
 }
 
@@ -62,6 +66,7 @@ export interface AdminSurface {
     idHebergement: number,
     payload: unknown
   ): Promise<void>;
+  listRateTypes(idFournisseur: number): Promise<RateTypeListResponse>;
 }
 
 export type ClientByRole<R extends Role> = R extends 'customer'
@@ -97,6 +102,25 @@ export function createOpenProClient<R extends Role>(
         { method: 'GET' }
       );
       return unwrapOk(resp);
+    },
+    async getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>) {
+      // Assuming GET is supported for reading; if not, adjust when Swagger confirms
+      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const resp = await requestJson<ApiResponse<RatesResponse>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/tarif${search}`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }) {
+      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/stock${search}`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
     }
   };
 
@@ -111,6 +135,14 @@ export function createOpenProClient<R extends Role>(
         }
       );
       unwrapOk(resp);
+    },
+    async listRateTypes(idFournisseur: number) {
+      const resp = await requestJson<ApiResponse<RateTypeListResponse>>(
+        config,
+        `/fournisseur/${idFournisseur}/typetarifs`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
     }
   };
 
