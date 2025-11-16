@@ -12,6 +12,17 @@ import {
 
 type Role = 'customer' | 'admin';
 
+function toSearchParams(params?: Record<string, unknown>): string {
+  if (!params) return '';
+  const flat: Record<string, string> = {};
+  for (const [k, v] of Object.entries(params)) {
+    if (v === undefined || v === null) continue;
+    flat[k] = String(v);
+  }
+  const q = new URLSearchParams(flat).toString();
+  return q ? `?${q}` : '';
+}
+
 async function requestJson<T>(
   cfg: OpenProClientConfig,
   path: string,
@@ -67,6 +78,16 @@ export interface AdminSurface {
     payload: unknown
   ): Promise<void>;
   listRateTypes(idFournisseur: number): Promise<RateTypeListResponse>;
+  createRateType(idFournisseur: number, payload: import('./types').TypeTarifAjout): Promise<import('./types').ReponseTypeTarifAjout>;
+  updateRateType(idFournisseur: number, idTypeTarif: number, payload: import('./types').TypeTarifModif): Promise<void>;
+  deleteRateType(idFournisseur: number, idTypeTarif: number): Promise<void>;
+  linkRateTypeToAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
+  unlinkRateTypeFromAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
+  listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<Record<string, unknown>>;
+  setRates(idFournisseur: number, idHebergement: number, payload: import('./types').RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
+  listWebhooks(): Promise<Record<string, unknown>>;
+  addWebhook(payload: Record<string, unknown>): Promise<Record<string, unknown>>;
+  deleteWebhook(payload: Record<string, unknown>): Promise<Record<string, unknown>>;
 }
 
 export type ClientByRole<R extends Role> = R extends 'customer'
@@ -87,7 +108,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async listBookings(idFournisseur: number, params?: Record<string, unknown>) {
-      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const search = toSearchParams(params);
       const resp = await requestJson<ApiResponse<BookingListResponse>>(
         config,
         `/fournisseur/${idFournisseur}/dossiers${search}`,
@@ -104,8 +125,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>) {
-      // Assuming GET is supported for reading; if not, adjust when Swagger confirms
-      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const search = toSearchParams(params);
       const resp = await requestJson<ApiResponse<RatesResponse>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/tarif${search}`,
@@ -114,7 +134,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }) {
-      const search = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
+      const search = toSearchParams(params as unknown as Record<string, unknown>);
       const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/stock${search}`,
@@ -141,6 +161,95 @@ export function createOpenProClient<R extends Role>(
         config,
         `/fournisseur/${idFournisseur}/typetarifs`,
         { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async createRateType(idFournisseur, payload) {
+      const resp = await requestJson<ApiResponse<import('./types').ReponseTypeTarifAjout>>(
+        config,
+        `/fournisseur/${idFournisseur}/typetarifs`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ typeTarifAjout: payload })
+        }
+      );
+      return unwrapOk(resp);
+    },
+    async updateRateType(idFournisseur, idTypeTarif, payload) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/typetarifs/${idTypeTarif}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({ typeTarifModif: payload })
+        }
+      );
+      unwrapOk(resp);
+    },
+    async deleteRateType(idFournisseur, idTypeTarif) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/typetarifs/${idTypeTarif}`,
+        { method: 'DELETE' }
+      );
+      unwrapOk(resp);
+    },
+    async linkRateTypeToAccommodation(idFournisseur, idHebergement, idTypeTarif) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/${idTypeTarif}`,
+        { method: 'POST' }
+      );
+      unwrapOk(resp);
+    },
+    async unlinkRateTypeFromAccommodation(idFournisseur, idHebergement, idTypeTarif) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/${idTypeTarif}`,
+        { method: 'DELETE' }
+      );
+      unwrapOk(resp);
+    },
+    async listAccommodationRateTypeLinks(idFournisseur, idHebergement) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async setRates(idFournisseur, idHebergement, payload) {
+      const resp = await requestJson<ApiResponse<{ warnings?: unknown[] } | Record<string, unknown>>>(
+        config,
+        `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/tarif`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ tarifs: payload.tarifs })
+        }
+      );
+      return unwrapOk(resp);
+    },
+    async listWebhooks() {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/config/dossier/webhooks`,
+        { method: 'GET' }
+      );
+      return unwrapOk(resp);
+    },
+    async addWebhook(payload) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/config/dossier/webhooks`,
+        { method: 'POST', body: JSON.stringify(payload) }
+      );
+      return unwrapOk(resp);
+    },
+    async deleteWebhook(payload) {
+      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+        config,
+        `/config/dossier/webhooks`,
+        { method: 'DELETE', body: JSON.stringify(payload) }
       );
       return unwrapOk(resp);
     }

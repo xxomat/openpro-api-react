@@ -53,4 +53,44 @@ export type RatesResponse = {
   tarifs?: Tarif[];
 } & Record<string, unknown>;
 
+// Admin payloads (simplified per Swagger, keep loose where needed)
+export type Multilingue = {
+  langue: string; // 'fr' | 'en' etc.
+  texte: string;
+};
+
+export type TypeTarifAjout = {
+  libelle: Multilingue[];
+  description: Multilingue[];
+  ordre: number;
+};
+
+export type TypeTarifModif = TypeTarifAjout;
+
+export type ReponseTypeTarifAjout = {
+  idTypeTarif: number;
+};
+
+export type ReponseTypeTarifListe = {
+  typeTarifs: RateType[];
+};
+
+export type LiaisonResponse = Record<string, unknown>;
+
+export type TarifModif = {
+  idTypeTarif: number;
+  debut: string; // YYYY-MM-DD
+  fin: string;   // YYYY-MM-DD
+  ouvert: boolean;
+  dureeMin: number;
+  dureeMax: number;
+  arriveeAutorisee: boolean;
+  departAutorise: boolean;
+  tarifPax: Record<string, unknown>;
+};
+
+export type RequeteTarifModif = {
+  tarifs: TarifModif[];
+};
+
 
