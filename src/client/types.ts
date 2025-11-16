@@ -56,6 +56,11 @@ export type RatesResponse = {
   tarifs?: Tarif[];
 } & Record<string, unknown>;
 
+export type Warning = {
+  code?: string;
+  detail?: string;
+};
+
 // Admin payloads (simplified per Swagger, keep loose where needed)
 export type Multilingue = {
   langue: string; // 'fr' | 'en' etc.
@@ -120,6 +125,97 @@ export type DossierWebhookSuppr = {
 
 export type DossierWebhookListe = {
   webhooks?: Array<{ url: string; emailAlerte?: string }>;
+};
+
+// =====================
+// Deeper nested schemas
+// =====================
+
+// Stock (GET /fournisseur/{idFournisseur}/hebergements/{idHebergement}/stock)
+export type StockJour = {
+  jour?: string;                // YYYY-MM-DD
+  stock?: number;               // remaining stock
+  ouvert?: boolean;             // open for booking
+} & Record<string, unknown>;
+
+export type StockResponse = {
+  // The Swagger points to ReponseStock; keeping flexible but structured
+  stock?: StockJour[];
+} & Record<string, unknown>;
+
+// Tarifs (read)
+export type TarifPaxOccupation = {
+  type?: string;
+  prix?: number;
+  nbPers?: number;
+};
+
+export type TarifPax = {
+  listeTarifPaxOccupation?: TarifPaxOccupation[];
+};
+
+export type TarifItem = {
+  idTypeTarif?: number;
+  debut?: string; // YYYY-MM-DD
+  fin?: string;   // YYYY-MM-DD
+  ouvert?: boolean;
+  dureeMin?: number;
+  dureeMax?: number;
+  arriveeAutorisee?: boolean;
+  departAutorise?: boolean;
+  tarifPax?: TarifPax;
+} & Record<string, unknown>;
+
+export type RatesListResponse = {
+  tarifs?: TarifItem[];
+} & Record<string, unknown>;
+
+// Dossiers (reservations)
+export type BookingCustomer = {
+  civilite?: string;
+  nom?: string;
+  prenom?: string;
+  email?: string;
+  telephone?: string;
+};
+
+export type BookingAccommodation = {
+  idHebergement?: number;
+  nom?: string;
+  dateArrivee?: string;
+  dateDepart?: string;
+  nbNuits?: number;
+  nbPersonnes?: number;
+  typeTarif?: {
+    idTypeTarif?: number;
+    libelle?: string;
+    description?: string;
+    detailPrix?: unknown;
+  };
+};
+
+export type BookingPayment = {
+  montantTotal?: number;
+  devise?: string;
+  transactions?: Array<Record<string, unknown>>;
+};
+
+export type Booking = {
+  idDossier?: number;
+  idFournisseur?: number;
+  reference?: string;
+  dateCreation?: string;
+  dateModification?: string;
+  client?: BookingCustomer;
+  hebergement?: BookingAccommodation;
+  paiement?: BookingPayment;
+} & Record<string, unknown>;
+
+export type BookingList = {
+  dossiers?: Booking[];
+  nbTotal?: number;
+  pageCourante?: number;
+  nbPages?: number;
 };
 
 

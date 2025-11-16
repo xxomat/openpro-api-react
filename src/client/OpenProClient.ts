@@ -70,10 +70,10 @@ function unwrapOk<T>(resp: ApiResponse<T>): T {
 // Read-only surface available to both roles
 export interface CustomerSurface {
   listAccommodations(idFournisseur: number): Promise<AccommodationListResponse>;
-  listBookings(idFournisseur: number, params?: ListBookingsParams): Promise<BookingListResponse>;
-  getBooking(idFournisseur: number, idDossier: number): Promise<BookingDetailResponse>;
-  getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>): Promise<RatesResponse>;
-  getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }): Promise<Record<string, unknown>>;
+  listBookings(idFournisseur: number, params?: ListBookingsParams): Promise<BookingList>;
+  getBooking(idFournisseur: number, idDossier: number): Promise<Booking>;
+  getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>): Promise<RatesListResponse>;
+  getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }): Promise<import('./types').StockResponse>;
   // TODO: add read endpoints required by the widget (bookings, rates reading if provided)
 }
 
@@ -115,9 +115,9 @@ export function createOpenProClient<R extends Role>(
       );
       return unwrapOk(resp);
     },
-    async listBookings(idFournisseur: number, params?: Record<string, unknown>) {
-      const search = toSearchParams(params);
-      const resp = await requestJson<ApiResponse<BookingListResponse>>(
+    async listBookings(idFournisseur: number, params?: ListBookingsParams) {
+      const search = toSearchParams(params as unknown as Record<string, unknown>);
+      const resp = await requestJson<ApiResponse<BookingList>>(
         config,
         `/fournisseur/${idFournisseur}/dossiers${search}`,
         { method: 'GET' }
@@ -125,7 +125,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async getBooking(idFournisseur: number, idDossier: number) {
-      const resp = await requestJson<ApiResponse<BookingDetailResponse>>(
+      const resp = await requestJson<ApiResponse<Booking>>(
         config,
         `/fournisseur/${idFournisseur}/dossiers/${idDossier}`,
         { method: 'GET' }
@@ -134,7 +134,7 @@ export function createOpenProClient<R extends Role>(
     },
     async getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>) {
       const search = toSearchParams(params);
-      const resp = await requestJson<ApiResponse<RatesResponse>>(
+      const resp = await requestJson<ApiResponse<RatesListResponse>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/tarif${search}`,
         { method: 'GET' }
@@ -143,7 +143,7 @@ export function createOpenProClient<R extends Role>(
     },
     async getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }) {
       const search = toSearchParams(params as unknown as Record<string, unknown>);
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<import('./types').StockResponse>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/stock${search}`,
         { method: 'GET' }
