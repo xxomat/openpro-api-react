@@ -154,9 +154,29 @@ export function App() {
   return (
     <div style={{ padding: 16, fontFamily: 'sans-serif', maxWidth: 900, margin: '0 auto' }}>
       <h1>OpenPro Playground</h1>
-      <p style={{ color: '#555' }}>
-        Use sandbox credentials. Do not expose production keys in the browser.
-      </p>
+      <div style={{ color: '#555' }}>
+        Base URL examples:
+        <ul style={{ marginTop: 8 }}>
+          <li>
+            Stub server: http://localhost:3000
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => setBaseUrl('http://localhost:3000')}
+            >
+              Set URL
+            </button>
+          </li>
+          <li>
+            OpenPro: https://api.open-pro.fr/tarif/multi/v1
+            <button
+              style={{ marginLeft: 8, padding: '2px 8px' }}
+              onClick={() => setBaseUrl('https://api.open-pro.fr/tarif/multi/v1')}
+            >
+              Set URL
+            </button>
+          </li>
+        </ul>
+      </div>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
