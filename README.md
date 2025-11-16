@@ -26,6 +26,25 @@ Open http://localhost:5173 and provide sandbox `baseUrl`, `apiKey`, and ids.
 pnpm test
 ```
 
+### Tests overview
+- Unit tests (default): mock `fetch` and validate SDK behavior.
+- Live stub tests: hit the local stub server over HTTP to validate dataset end-to-end.
+
+Run live tests (recommended flow):
+1) Start the stub server in a terminal:
+```bash
+npm run stub   # http://localhost:3000
+```
+2) In another terminal, run tests:
+```bash
+pnpm test
+```
+- Live tests will auto-detect the stub at `http://localhost:3000`. To point elsewhere, set:
+```bash
+OPENPRO_BASE_URL=http://your-host:port pnpm test
+```
+- Live tests are located in `__tests__/stub-server-tests/*` and will gracefully skip if the stub is not reachable.
+
 ## Usage (SDK)
 
 Create a customer (read-only) client:
@@ -109,6 +128,11 @@ Stock behavior:
 - The stub seeds a few upcoming days with `dispo` values per `(idFournisseur, idHebergement)`.
 - `POST /stock` merges provided `jours` by date into the in-memory dataset.
 - `GET /stock` returns the current dataset, optionally sliced by `start`/`end`.
+
+Generate a full 2025–2026 stock range:
+```bash
+node stub-server/scripts/regenerate-stock.js
+```
 
 ## Persistent fake data (file-backed)
 The stub server reads and writes fake data from `stub-server/stub-data.json`. This file is versioned in git so you can evolve the dataset over time.
