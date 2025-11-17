@@ -126,9 +126,22 @@ app.post('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
 app.get('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
   const { idFournisseur } = req.params;
   const list = db.rateTypes[String(idFournisseur)] || [];
+  
+  // Transform to Swagger format: each TypeTarif must have cleTypeTarif
+  const typeTarifs = list.map(item => {
+    const { idTypeTarif, ...rest } = item;
+    return {
+      cleTypeTarif: {
+        idFournisseur: Number(idFournisseur),
+        idTypeTarif: Number(idTypeTarif)
+      },
+      ...rest
+    };
+  });
+  
   res.json({
     ok: 1,
-    data: { typeTarifs: list }
+    data: { typeTarifs }
   });
 });
 
