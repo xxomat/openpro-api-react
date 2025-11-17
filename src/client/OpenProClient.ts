@@ -6,8 +6,11 @@ import {
   OpenProClientConfig,
   BookingListResponse,
   BookingDetailResponse,
+  Booking,
+  BookingList,
   RateTypeListResponse,
   RatesResponse,
+  RatesListResponse,
   ListBookingsParams,
   DossierWebhookAjout,
   DossierWebhookSuppr,
@@ -15,7 +18,8 @@ import {
   ReponseTypeTarifAjout,
   TypeTarifAjout,
   TypeTarifModif,
-  RequeteTarifModif
+  RequeteTarifModif,
+  ReponseLiaisonHebergementTypeTarifListe
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -91,7 +95,7 @@ export interface AdminSurface {
   deleteRateType(idFournisseur: number, idTypeTarif: number): Promise<void>;
   linkRateTypeToAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   unlinkRateTypeFromAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
-  listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<Record<string, unknown>>;
+  listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<ReponseLiaisonHebergementTypeTarifListe>;
   setRates(idFournisseur: number, idHebergement: number, payload: RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
   listWebhooks(): Promise<DossierWebhookListe>;
   addWebhook(payload: DossierWebhookAjout): Promise<Record<string, unknown>>;
@@ -219,7 +223,7 @@ export function createOpenProClient<R extends Role>(
       unwrapOk(resp);
     },
     async listAccommodationRateTypeLinks(idFournisseur, idHebergement) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseLiaisonHebergementTypeTarifListe>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs`,
         { method: 'GET' }

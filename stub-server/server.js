@@ -137,6 +137,37 @@ app.put('/fournisseur/:idFournisseur/typetarifs/:idTypeTarif', (req, res) => {
   });
 });
 
+// GET /fournisseur/{idFournisseur}/hebergements/{idHebergement}/typetarifs (list rate types linked to accommodation)
+app.get('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs', (req, res) => {
+  const { idFournisseur, idHebergement } = req.params;
+  const key = `${idFournisseur}:${idHebergement}`;
+  const ratesData = db.rates[key] || { periodes: [] };
+  
+  // Extract unique idTypeTarif from periods
+  const idTypeTarifs = new Set();
+  if (Array.isArray(ratesData.periodes)) {
+    for (const periode of ratesData.periodes) {
+      if (periode && typeof periode.idTypeTarif === 'number') {
+        idTypeTarifs.add(periode.idTypeTarif);
+      }
+    }
+  }
+  
+  // Build response according to Swagger format
+  const liaisonHebergementTypeTarifs = Array.from(idTypeTarifs).map(idTypeTarif => ({
+    idFournisseur: Number(idFournisseur),
+    idHebergement: Number(idHebergement),
+    idTypeTarif: Number(idTypeTarif)
+  }));
+  
+  res.json({
+    ok: 1,
+    data: {
+      liaisonHebergementTypeTarifs
+    }
+  });
+});
+
 // POST /fournisseur/{idFournisseur}/hebergements/{idHebergement}/typetarifs/:idTypeTarif (link rate type)
 app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:idTypeTarif', (req, res) => {
   const { idHebergement, idTypeTarif } = req.params;

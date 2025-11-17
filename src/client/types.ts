@@ -85,6 +85,17 @@ export type ReponseTypeTarifListe = {
 
 export type LiaisonResponse = Record<string, unknown>;
 
+// Liaison hébergement - type de tarif (selon Swagger)
+export type LiaisonHebergementTypeTarif = {
+  idFournisseur: number;
+  idHebergement: number;
+  idTypeTarif: number;
+};
+
+export type ReponseLiaisonHebergementTypeTarifListe = {
+  liaisonHebergementTypeTarifs: LiaisonHebergementTypeTarif[];
+};
+
 export type TarifModif = {
   idTypeTarif: number;
   debut: string; // YYYY-MM-DD
