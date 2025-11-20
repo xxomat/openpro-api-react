@@ -173,6 +173,34 @@ Référence produit:
   - `PUT /fournisseur/:idFournisseur/typetarifs/:idTypeTarif`
   - `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:idTypeTarif`
   - `POST /fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif` (+ `GET` helper de lecture)
+    - **Format de la requête** :
+      ```json
+      {
+        "tarifs": [
+          {
+            "idTypeTarif": number,
+            "debut": "YYYY-MM-DD",
+            "fin": "YYYY-MM-DD",
+            "ouvert": true,
+            "dureeMin": number,
+            "dureeMax": number,
+            "arriveeAutorisee": true,
+            "departAutorise": true,
+            "tarifPax": { "listeTarifPaxOccupation": [...] }
+          }
+        ]
+      }
+      ```
+    - **Comportement du stub** :
+      - Parse le tableau `tarifs` reçu.
+      - Pour chaque période dans `tarifs` :
+        - Met à jour ou crée les périodes dans `db.rates[key].periodes`.
+        - Fusionne les prix dans les périodes existantes ou crée de nouvelles périodes.
+        - Met à jour le champ `dureeMin` dans les périodes concernées.
+        - Les périodes sont stockées dans `db.rates[key].periodes` où `key = "${idFournisseur}:${idHebergement}"`.
+      - Sauvegarde les modifications dans `stub-data.json`.
+      - Retourne `{ ok: 1, data: { idHebergement: number, applied: true, payload: merged } }`.
+    - **Note importante** : La durée minimale (`dureeMin`) fait partie intégrante de la structure des tarifs dans l'API OpenPro. Elle n'est pas dans un endpoint séparé, mais intégrée dans chaque période tarifaire.
 - Intégration:
   - SDK: passer `baseUrl: 'http://localhost:3000'` et n’importe quelle `apiKey` (le stub l’ignore).
   - Playground: saisir la même Base URL et des IDs simples (ex: `idFournisseur=47186`, `idHebergement=1`).

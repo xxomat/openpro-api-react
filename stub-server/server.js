@@ -191,8 +191,162 @@ app.get('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs', (r
   });
 });
 
+// POST /fournisseur/{idFournisseur}/hebergements/:idHebergement/typetarifs/tarif (set rates)
+// IMPORTANT: This route must be defined BEFORE the /typetarifs/:idTypeTarif route
+// to ensure Express matches the specific "tarif" path before the generic parameter route
+app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif', (req, res) => {
+  console.log('[STUB] POST handler called!');
+  try {
+    const { idFournisseur, idHebergement } = req.params;
+    const payload = req.body ?? {};
+    const key = `${idFournisseur}:${idHebergement}`;
+    
+    console.log(`\n[STUB] ========================================`);
+    console.log(`[STUB] Received setRates for ${key}`);
+    console.log(`[STUB] Payload:`, JSON.stringify(payload, null, 2));
+  
+  // Initialiser la structure si elle n'existe pas
+  if (!db.rates[key]) {
+    db.rates[key] = { periodes: [] };
+  }
+  
+  const beforePeriodes = JSON.parse(JSON.stringify(db.rates[key].periodes));
+  console.log(`[STUB] Before (${beforePeriodes.length} periods):`, JSON.stringify(beforePeriodes, null, 2));
+  
+  // Si le payload contient un tableau tarifs, traiter chaque période
+  if (Array.isArray(payload.tarifs)) {
+    let existingPeriodes = [...(db.rates[key].periodes || [])];
+    
+    // Pour chaque période reçue, remplacer les périodes existantes qui chevauchent
+    for (const newPeriode of payload.tarifs) {
+      const newStart = new Date(newPeriode.debut + 'T00:00:00');
+      const newEnd = new Date(newPeriode.fin + 'T23:59:59');
+      
+      // Filtrer les périodes existantes : garder celles qui ne chevauchent pas avec la nouvelle période
+      const filteredPeriodes = [];
+      
+      for (const existing of existingPeriodes) {
+        if (existing.idTypeTarif === newPeriode.idTypeTarif) {
+          const existingStart = new Date(existing.debut + 'T00:00:00');
+          const existingEnd = new Date(existing.fin + 'T23:59:59');
+          
+          // Vérifier le chevauchement
+          if (newStart <= existingEnd && newEnd >= existingStart) {
+            // Cette période chevauche, on va la découper
+            
+            // Période avant la nouvelle (si elle existe)
+            if (existingStart < newStart) {
+              // Calculer la date du jour précédent de manière fiable
+              // Utiliser directement la string de date pour éviter les problèmes de fuseau horaire
+              const [year, month, day] = newPeriode.debut.split('-').map(Number);
+              const dayBeforeDate = new Date(Date.UTC(year, month - 1, day - 1));
+              const dateBeforeStr = dayBeforeDate.toISOString().split('T')[0];
+              filteredPeriodes.push({
+                ...existing,
+                fin: dateBeforeStr
+              });
+            }
+            
+            // Période après la nouvelle (si elle existe)
+            if (existingEnd > newEnd) {
+              // Calculer la date du jour suivant de manière fiable
+              // Utiliser directement la string de date pour éviter les problèmes de fuseau horaire
+              const [year, month, day] = newPeriode.fin.split('-').map(Number);
+              const dayAfterDate = new Date(Date.UTC(year, month - 1, day + 1));
+              const dateAfterStr = dayAfterDate.toISOString().split('T')[0];
+              filteredPeriodes.push({
+                ...existing,
+                debut: dateAfterStr
+              });
+            }
+            
+            // La nouvelle période remplace la partie chevauchante
+            // (on l'ajoutera après la boucle)
+          } else {
+            // Pas de chevauchement, garder la période existante
+            filteredPeriodes.push(existing);
+          }
+        } else {
+          // Différent idTypeTarif, garder la période existante
+          filteredPeriodes.push(existing);
+        }
+      }
+      
+      // Trouver une période existante avec le même idTypeTarif qui chevauche pour préserver le tarifPax si nécessaire
+      // Chercher dans les périodes originales avant le découpage
+      const originalPeriodWithSameType = db.rates[key].periodes.find(
+        p => p.idTypeTarif === newPeriode.idTypeTarif &&
+        new Date(p.debut + 'T00:00:00') <= new Date(newPeriode.fin + 'T23:59:59') &&
+        new Date(p.fin + 'T23:59:59') >= new Date(newPeriode.debut + 'T00:00:00')
+      );
+      
+      // Si la nouvelle période n'a pas de tarifPax valide (liste vide ou absente) et qu'on a une période existante,
+      // préserver le tarifPax existant pour ne pas perdre les prix
+      let tarifPaxToUse = newPeriode.tarifPax;
+      if ((!tarifPaxToUse || !tarifPaxToUse.listeTarifPaxOccupation || tarifPaxToUse.listeTarifPaxOccupation.length === 0) &&
+          originalPeriodWithSameType && originalPeriodWithSameType.tarifPax &&
+          originalPeriodWithSameType.tarifPax.listeTarifPaxOccupation &&
+          originalPeriodWithSameType.tarifPax.listeTarifPaxOccupation.length > 0) {
+        tarifPaxToUse = originalPeriodWithSameType.tarifPax;
+      }
+      
+      // Ajouter la nouvelle période avec les valeurs fournies
+      filteredPeriodes.push({
+        idTypeTarif: newPeriode.idTypeTarif,
+        debut: newPeriode.debut,
+        fin: newPeriode.fin,
+        ouvert: newPeriode.ouvert !== undefined ? newPeriode.ouvert : true,
+        dureeMin: newPeriode.dureeMin !== undefined ? newPeriode.dureeMin : 1,
+        dureeMax: newPeriode.dureeMax !== undefined ? newPeriode.dureeMax : 30,
+        arriveeAutorisee: newPeriode.arriveeAutorisee !== undefined ? newPeriode.arriveeAutorisee : true,
+        departAutorise: newPeriode.departAutorise !== undefined ? newPeriode.departAutorise : true,
+        tarifPax: tarifPaxToUse || { listeTarifPaxOccupation: [] }
+      });
+      
+      existingPeriodes = filteredPeriodes;
+    }
+    
+    // Trier par date de début, puis par idTypeTarif, puis par fin (décroissant pour que les périodes courtes soient traitées en dernier)
+    // Cela permet aux périodes spécifiques (courtes) d'écraser les périodes longues qui les couvrent
+    db.rates[key].periodes = existingPeriodes.sort((a, b) => {
+      if (a.debut !== b.debut) return a.debut.localeCompare(b.debut);
+      if (a.idTypeTarif !== b.idTypeTarif) return a.idTypeTarif - b.idTypeTarif;
+      // Trier par fin décroissant : périodes courtes (fin tôt) en dernier
+      return b.fin.localeCompare(a.fin);
+    });
+  } else {
+    // Fallback: comportement original pour compatibilité
+    const merged = { ...(db.rates[key] || {}), ...(payload || {}) };
+    db.rates[key] = merged;
+  }
+  
+  const afterPeriodes = JSON.parse(JSON.stringify(db.rates[key].periodes));
+  console.log(`[STUB] After (${afterPeriodes.length} periods):`, JSON.stringify(afterPeriodes, null, 2));
+  
+    saveDb(db);
+    console.log(`[STUB] Database saved to ${DATA_PATH}`);
+    console.log(`[STUB] ========================================\n`);
+    res.json({
+      ok: 1,
+      data: {
+        idHebergement: Number(idHebergement),
+        applied: true,
+        payload: db.rates[key]
+      }
+    });
+  } catch (error) {
+    console.error(`[STUB] ERROR in setRates handler:`, error);
+    console.error(`[STUB] Stack:`, error instanceof Error ? error.stack : 'No stack');
+    res.status(500).json({
+      ok: 0,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 // POST /fournisseur/{idFournisseur}/hebergements/{idHebergement}/typetarifs/:idTypeTarif (link rate type)
 app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:idTypeTarif', (req, res) => {
+  console.log('[STUB] POST handler for typetarifs/:idTypeTarif called!', req.params);
   const { idHebergement, idTypeTarif } = req.params;
   res.json({
     ok: 1,
@@ -200,24 +354,6 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/:id
       linked: true,
       idHebergement: Number(idHebergement),
       idTypeTarif: Number(idTypeTarif)
-    }
-  });
-});
-
-// POST /fournisseur/{idFournisseur}/hebergements/:idHebergement/typetarifs/tarif (set rates)
-app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif', (req, res) => {
-  const { idFournisseur, idHebergement } = req.params;
-  const payload = req.body ?? {};
-  const key = `${idFournisseur}:${idHebergement}`;
-  const merged = { ...(db.rates[key] || {}), ...(payload || {}) };
-  db.rates[key] = merged;
-  saveDb(db);
-  res.json({
-    ok: 1,
-    data: {
-      idHebergement: Number(idHebergement),
-      applied: true,
-      payload: merged
     }
   });
 });
