@@ -45,22 +45,452 @@
   "dossiers": {
     "47186": [
       {
-        "idDossier": 123,
-        "statut": "CONFIRMED",
+        "idDossier": 125,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-001",
+        "dateCreation": "2025-01-10T14:20:00Z",
+        "dateModification": "2025-01-10T14:20:00Z",
         "client": {
-          "nom": "Doe",
-          "prenom": "Jane"
+          "civilite": "M",
+          "nom": "Martin",
+          "prenom": "Pierre",
+          "email": "pierre.martin@example.com",
+          "telephone": "+33612345678"
         },
-        "lignes": []
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-06-15",
+          "dateDepart": "2025-06-22",
+          "nbNuits": 7,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 588,
+          "devise": "EUR",
+          "transactions": []
+        }
       },
       {
-        "idDossier": 124,
-        "statut": "PENDING",
+        "idDossier": 126,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-002",
+        "dateCreation": "2025-01-10T15:30:00Z",
+        "dateModification": "2025-01-10T15:30:00Z",
         "client": {
-          "nom": "Dupont",
-          "prenom": "Jean"
+          "civilite": "Mme",
+          "nom": "Bernard",
+          "prenom": "Sophie",
+          "email": "sophie.bernard@example.com",
+          "telephone": "+33698765432"
         },
-        "lignes": []
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-06-15",
+          "dateDepart": "2025-06-22",
+          "nbNuits": 7,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 658,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 127,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-003",
+        "dateCreation": "2025-01-12T09:15:00Z",
+        "dateModification": "2025-01-12T09:15:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Dubois",
+          "prenom": "Jean",
+          "email": "jean.dubois@example.com",
+          "telephone": "+33611223344"
+        },
+        "hebergement": {
+          "idHebergement": 3,
+          "nom": "Porquerolles",
+          "dateArrivee": "2025-07-10",
+          "dateDepart": "2025-07-17",
+          "nbNuits": 7,
+          "nbPersonnes": 3,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 980,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 128,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-004",
+        "dateCreation": "2025-01-12T10:00:00Z",
+        "dateModification": "2025-01-12T10:00:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Lefebvre",
+          "prenom": "Marc",
+          "email": "marc.lefebvre@example.com",
+          "telephone": "+33655443322"
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-07-10",
+          "dateDepart": "2025-07-17",
+          "nbNuits": 7,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 588,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 129,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-005",
+        "dateCreation": "2025-01-15T11:30:00Z",
+        "dateModification": "2025-01-15T11:30:00Z",
+        "client": {
+          "civilite": "Mme",
+          "nom": "Moreau",
+          "prenom": "Claire",
+          "email": "claire.moreau@example.com",
+          "telephone": "+33677889900"
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-08-01",
+          "dateDepart": "2025-08-08",
+          "nbNuits": 7,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 658,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 130,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-006",
+        "dateCreation": "2025-01-15T12:00:00Z",
+        "dateModification": "2025-01-15T12:00:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Petit",
+          "prenom": "Thomas",
+          "email": "thomas.petit@example.com",
+          "telephone": "+33644556677"
+        },
+        "hebergement": {
+          "idHebergement": 3,
+          "nom": "Porquerolles",
+          "dateArrivee": "2025-08-01",
+          "dateDepart": "2025-08-08",
+          "nbNuits": 7,
+          "nbPersonnes": 5,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 1400,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 131,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-007",
+        "dateCreation": "2025-01-20T13:20:00Z",
+        "dateModification": "2025-01-20T13:20:00Z",
+        "client": {
+          "civilite": "Mme",
+          "nom": "Rousseau",
+          "prenom": "Laurent",
+          "email": "laurent.rousseau@example.com",
+          "telephone": "+33699887766"
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-09-05",
+          "dateDepart": "2025-09-12",
+          "nbNuits": 7,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 588,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 132,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-008",
+        "dateCreation": "2025-01-20T14:00:00Z",
+        "dateModification": "2025-01-20T14:00:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Garcia",
+          "prenom": "Marie",
+          "email": "marie.garcia@example.com",
+          "telephone": "+33622334455"
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-09-05",
+          "dateDepart": "2025-09-12",
+          "nbNuits": 7,
+          "nbPersonnes": 6,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 987,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 133,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-009",
+        "dateCreation": "2025-01-25T08:30:00Z",
+        "dateModification": "2025-01-25T08:30:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Simon",
+          "prenom": "David",
+          "email": "david.simon@example.com",
+          "telephone": "+33633445566"
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-10-15",
+          "dateDepart": "2025-10-22",
+          "nbNuits": 7,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 588,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 134,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-010",
+        "dateCreation": "2025-01-25T09:00:00Z",
+        "dateModification": "2025-01-25T09:00:00Z",
+        "client": {
+          "civilite": "Mme",
+          "nom": "Michel",
+          "prenom": "Isabelle",
+          "email": "isabelle.michel@example.com",
+          "telephone": "+33655667788"
+        },
+        "hebergement": {
+          "idHebergement": 3,
+          "nom": "Porquerolles",
+          "dateArrivee": "2025-10-15",
+          "dateDepart": "2025-10-22",
+          "nbNuits": 7,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 1960,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 135,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-011",
+        "dateCreation": "2025-02-01T10:15:00Z",
+        "dateModification": "2025-02-01T10:15:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Leroy",
+          "prenom": "François",
+          "email": "francois.leroy@example.com",
+          "telephone": "+33666778899"
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-11-20",
+          "dateDepart": "2025-11-27",
+          "nbNuits": 7,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 658,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 136,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-012",
+        "dateCreation": "2025-02-01T11:00:00Z",
+        "dateModification": "2025-02-01T11:00:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Fournier",
+          "prenom": "Nicolas",
+          "email": "nicolas.fournier@example.com",
+          "telephone": "+33611223399"
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-11-20",
+          "dateDepart": "2025-11-27",
+          "nbNuits": 7,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 588,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 137,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-013",
+        "dateCreation": "2025-02-05T14:45:00Z",
+        "dateModification": "2025-02-05T14:45:00Z",
+        "client": {
+          "civilite": "Mme",
+          "nom": "Girard",
+          "prenom": "Céline",
+          "email": "celine.girard@example.com",
+          "telephone": "+33699887711"
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-12-20",
+          "dateDepart": "2025-12-27",
+          "nbNuits": 7,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 658,
+          "devise": "EUR",
+          "transactions": []
+        }
+      },
+      {
+        "idDossier": 138,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-014",
+        "dateCreation": "2025-02-05T15:30:00Z",
+        "dateModification": "2025-02-05T15:30:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Bonnet",
+          "prenom": "Julien",
+          "email": "julien.bonnet@example.com",
+          "telephone": "+33622334411"
+        },
+        "hebergement": {
+          "idHebergement": 3,
+          "nom": "Porquerolles",
+          "dateArrivee": "2025-12-20",
+          "dateDepart": "2025-12-31",
+          "nbNuits": 11,
+          "nbPersonnes": 3,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 1540,
+          "devise": "EUR",
+          "transactions": []
+        }
       }
     ],
     "55123": [],
@@ -727,35 +1157,35 @@
         },
         {
           "date": "2025-06-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-17",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-18",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-22",
@@ -827,35 +1257,35 @@
         },
         {
           "date": "2025-07-09",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-10",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-11",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-12",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-13",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-17",
@@ -1055,35 +1485,35 @@
         },
         {
           "date": "2025-09-04",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-05",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-06",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-07",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-08",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-09",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-10",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-11",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-12",
@@ -1215,35 +1645,35 @@
         },
         {
           "date": "2025-10-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-17",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-18",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-22",
@@ -1359,35 +1789,35 @@
         },
         {
           "date": "2025-11-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-22",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-23",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-24",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-25",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-26",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-27",
@@ -3651,35 +4081,35 @@
         },
         {
           "date": "2025-06-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-17",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-18",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-06-22",
@@ -3839,35 +4269,35 @@
         },
         {
           "date": "2025-07-31",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-02",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-03",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-04",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-05",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-06",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-07",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-08",
@@ -3979,35 +4409,35 @@
         },
         {
           "date": "2025-09-04",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-05",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-06",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-07",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-08",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-09",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-10",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-11",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-09-12",
@@ -4283,35 +4713,35 @@
         },
         {
           "date": "2025-11-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-22",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-23",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-24",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-25",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-26",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-27",
@@ -4403,35 +4833,35 @@
         },
         {
           "date": "2025-12-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-22",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-23",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-24",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-25",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-26",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-27",
@@ -6675,35 +7105,35 @@
         },
         {
           "date": "2025-07-09",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-10",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-11",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-12",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-13",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-07-17",
@@ -6763,35 +7193,35 @@
         },
         {
           "date": "2025-07-31",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-02",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-03",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-04",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-05",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-06",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-07",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-08-08",
@@ -7063,35 +7493,35 @@
         },
         {
           "date": "2025-10-14",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-15",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-16",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-17",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-18",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-10-22",
@@ -7327,51 +7757,51 @@
         },
         {
           "date": "2025-12-19",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-20",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-21",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-22",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-23",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-24",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-25",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-26",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-27",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-28",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-31",
