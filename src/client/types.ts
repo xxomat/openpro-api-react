@@ -188,6 +188,20 @@ export type BookingCustomer = {
   prenom?: string;
   email?: string;
   telephone?: string;
+  remarques?: string;
+  adresse?: string;
+  codePostal?: string;
+  ville?: string;
+  pays?: string;
+  dateNaissance?: string;
+  nationalite?: string;
+  profession?: string;
+  societe?: string;
+  siret?: string;
+  tva?: string;
+  langue?: string;
+  newsletter?: boolean;
+  cgvAcceptees?: boolean;
 };
 
 export type BookingAccommodation = {
