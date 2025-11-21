@@ -19,6 +19,11 @@ app.use((req, _res, next) => {
   next();
 });
 
+// Health check endpoint
+app.get('/health', (_req, res) => {
+  res.json({ ok: 1, status: 'healthy' });
+});
+
 // --- File-backed fake DB ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
