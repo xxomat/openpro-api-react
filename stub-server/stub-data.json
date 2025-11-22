@@ -865,6 +865,124 @@
             "statut": "confirme"
           }
         }
+      },
+      {
+        "idDossier": 139,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-015",
+        "dateCreation": "2025-10-15T10:00:00Z",
+        "dateModification": "2025-10-15T10:00:00Z",
+        "client": {
+          "civilite": "Mme",
+          "nom": "Dubois",
+          "prenom": "Marie",
+          "email": "marie.dubois@example.com",
+          "telephone": "+33698765432",
+          "remarques": "Séjour automnal",
+          "adresse": "12 Avenue des Champs-Élysées",
+          "codePostal": "75008",
+          "ville": "Paris",
+          "pays": "France",
+          "dateNaissance": "1988-05-20",
+          "nationalite": "Française",
+          "profession": "Architecte",
+          "societe": "",
+          "siret": "",
+          "tva": "",
+          "langue": "fr",
+          "newsletter": false,
+          "cgvAcceptees": true
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "Noirmoutier",
+          "dateArrivee": "2025-11-28",
+          "dateDepart": "2025-12-01",
+          "nbNuits": 3,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 252,
+          "devise": "EUR",
+          "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-139",
+            "reference": "REF-LOC-RES-2025-015",
+            "dateCreation": "2025-10-15T10:00:00Z",
+            "dateModification": "2025-10-15T10:00:00Z",
+            "montant": 252,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
+        }
+      },
+      {
+        "idDossier": 140,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-016",
+        "dateCreation": "2025-10-20T14:30:00Z",
+        "dateModification": "2025-10-20T14:30:00Z",
+        "client": {
+          "civilite": "M",
+          "nom": "Johnson",
+          "prenom": "James",
+          "email": "james.johnson@example.com",
+          "telephone": "+44123456789",
+          "remarques": "Week-end prolongé en famille",
+          "adresse": "25 Oxford Street",
+          "codePostal": "W1D 2DZ",
+          "ville": "London",
+          "pays": "Royaume-Uni",
+          "dateNaissance": "1985-09-12",
+          "nationalite": "Britannique",
+          "profession": "Consultant",
+          "societe": "",
+          "siret": "",
+          "tva": "",
+          "langue": "en",
+          "newsletter": true,
+          "cgvAcceptees": true
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "Ceylan",
+          "dateArrivee": "2025-11-28",
+          "dateDepart": "2025-12-03",
+          "nbNuits": 5,
+          "nbPersonnes": 4,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 470,
+          "devise": "EUR",
+          "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-140",
+            "reference": "REF-LOC-RES-2025-016",
+            "dateCreation": "2025-10-20T14:30:00Z",
+            "dateModification": "2025-10-20T14:30:00Z",
+            "montant": 470,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
+        }
       }
     ],
     "55123": [],
@@ -2199,15 +2317,15 @@
         },
         {
           "date": "2025-11-28",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-01",
@@ -5123,23 +5241,23 @@
         },
         {
           "date": "2025-11-28",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-02",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-03",
@@ -15697,6 +15815,139 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-01-01",
+          "fin": "2025-11-26",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-27",
+          "fin": "2025-11-27",
+          "ouvert": true,
+          "dureeMin": 2,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-28",
+          "fin": "2025-12-02",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-03",
+          "fin": "2025-12-03",
+          "ouvert": true,
+          "dureeMin": 10000,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-04",
+          "fin": "2025-12-04",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-05",
+          "fin": "2025-12-05",
+          "ouvert": true,
+          "dureeMin": null,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1003,
+          "debut": "2025-12-05",
+          "fin": "2025-12-06",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 190
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-06",
           "fin": "2025-12-31",
           "ouvert": true,
           "dureeMin": 1,
@@ -15739,6 +15990,139 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-01-01",
+          "fin": "2025-11-26",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-27",
+          "fin": "2025-11-27",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-28",
+          "fin": "2025-12-02",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-03",
+          "fin": "2025-12-03",
+          "ouvert": true,
+          "dureeMin": 10000,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-04",
+          "fin": "2025-12-04",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-05",
+          "fin": "2025-12-05",
+          "ouvert": true,
+          "dureeMin": null,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1003,
+          "debut": "2025-12-05",
+          "fin": "2025-12-06",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 190
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-06",
           "fin": "2025-12-31",
           "ouvert": true,
           "dureeMin": 1,
@@ -15781,7 +16165,7 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-01-01",
-          "fin": "2025-12-31",
+          "fin": "2025-11-26",
           "ouvert": true,
           "dureeMin": 1,
           "dureeMax": 30,
@@ -15815,6 +16199,203 @@
         {
           "idTypeTarif": 1003,
           "debut": "2025-01-01",
+          "fin": "2025-12-04",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "pension_complete",
+                "nbPers": 2,
+                "prix": 180
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-27",
+          "fin": "2025-11-27",
+          "ouvert": true,
+          "dureeMin": 2,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 130
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-11-28",
+          "fin": "2025-12-02",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "occupation",
+                "nbPers": 1,
+                "prix": 100
+              },
+              {
+                "type": "occupation",
+                "nbPers": 2,
+                "prix": 130
+              },
+              {
+                "type": "occupation",
+                "nbPers": 3,
+                "prix": 140
+              },
+              {
+                "type": "occupation",
+                "nbPers": 4,
+                "prix": 145
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-03",
+          "fin": "2025-12-03",
+          "ouvert": true,
+          "dureeMin": 10000,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 130
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-04",
+          "fin": "2025-12-04",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "occupation",
+                "nbPers": 1,
+                "prix": 100
+              },
+              {
+                "type": "occupation",
+                "nbPers": 2,
+                "prix": 130
+              },
+              {
+                "type": "occupation",
+                "nbPers": 3,
+                "prix": 140
+              },
+              {
+                "type": "occupation",
+                "nbPers": 4,
+                "prix": 145
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-05",
+          "fin": "2025-12-05",
+          "ouvert": true,
+          "dureeMin": null,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 130
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1003,
+          "debut": "2025-12-05",
+          "fin": "2025-12-06",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 190
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-06",
+          "fin": "2025-12-31",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "occupation",
+                "nbPers": 1,
+                "prix": 100
+              },
+              {
+                "type": "occupation",
+                "nbPers": 2,
+                "prix": 130
+              },
+              {
+                "type": "occupation",
+                "nbPers": 3,
+                "prix": 140
+              },
+              {
+                "type": "occupation",
+                "nbPers": 4,
+                "prix": 145
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1003,
+          "debut": "2025-12-07",
           "fin": "2025-12-31",
           "ouvert": true,
           "dureeMin": 1,
@@ -15888,6 +16469,25 @@
     },
     "55123:1": {
       "periodes": [
+        {
+          "idTypeTarif": 1101,
+          "debut": "2025-12-05",
+          "fin": "2025-12-05",
+          "ouvert": true,
+          "dureeMin": null,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 4,
+                "prix": 350
+              }
+            ]
+          }
+        },
         {
           "idTypeTarif": 1101,
           "debut": "2025-01-01",
