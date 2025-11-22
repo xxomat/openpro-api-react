@@ -225,6 +225,93 @@ export type BookingPayment = {
   transactions?: Array<Record<string, unknown>>;
 };
 
+// DossierTransaction - Informations sur la provenance de la réservation
+// Basé sur https://documentation.open-system.fr/api-openpro/tarif/multi/v1/#section-datacontract-data_DossierTransactionBooking
+
+export type DossierTransactionBooking = {
+  // Identifiants
+  idTransaction?: string;
+  reference?: string;
+  confirmationCode?: string;
+  
+  // Dates
+  dateCreation?: string;
+  dateModification?: string;
+  
+  // Informations financières
+  montant?: number;
+  devise?: string;
+  commission?: number;
+  montantNet?: number;
+  
+  // Statut
+  statut?: string;
+} & Record<string, unknown>;
+
+export type DossierTransactionOpenSystem = {
+  // Identifiants
+  idTransaction?: string;
+  reference?: string;
+  
+  // Dates
+  dateCreation?: string;
+  dateModification?: string;
+  
+  // Informations financières
+  montant?: number;
+  devise?: string;
+  
+  // Statut
+  statut?: string;
+} & Record<string, unknown>;
+
+export type DossierTransactionResaLocale = {
+  // Identifiants
+  idTransaction?: string;
+  reference?: string;
+  
+  // Dates
+  dateCreation?: string;
+  dateModification?: string;
+  
+  // Informations financières
+  montant?: number;
+  devise?: string;
+  
+  // Statut
+  statut?: string;
+  
+  // Informations spécifiques réservation locale
+  pointDeVente?: string;
+  utilisateur?: string;
+} & Record<string, unknown>;
+
+export type DossierTransactionXotelia = {
+  // Identifiants
+  idTransaction?: string;
+  reference?: string;
+  
+  // Dates
+  dateCreation?: string;
+  dateModification?: string;
+  
+  // Informations financières
+  montant?: number;
+  devise?: string;
+  commission?: number;
+  montantNet?: number;
+  
+  // Statut
+  statut?: string;
+} & Record<string, unknown>;
+
+export type DossierTransaction = {
+  transactionOpenSystem?: DossierTransactionOpenSystem;  // Réservation depuis OpenSystem
+  transactionResaLocale?: DossierTransactionResaLocale;  // Réservation locale
+  transactionXotelia?: DossierTransactionXotelia;       // Réservation depuis Xotelia
+  transactionBooking?: DossierTransactionBooking;  // Réservation depuis Booking.com
+} & Record<string, unknown>;
+
 export type Booking = {
   idDossier?: number;
   idFournisseur?: number;
@@ -234,6 +321,7 @@ export type Booking = {
   client?: BookingCustomer;
   hebergement?: BookingAccommodation;
   paiement?: BookingPayment;
+  transaction?: DossierTransaction;  // Informations sur la provenance de la réservation
 } & Record<string, unknown>;
 
 export type BookingList = {
