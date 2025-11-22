@@ -29,7 +29,37 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_PATH = path.join(__dirname, 'stub-data.json');
 
-function loadDb() {
+// Mutex pour protéger les accès concurrents au fichier
+class FileMutex {
+  constructor() {
+    this.queue = [];
+    this.locked = false;
+  }
+
+  async acquire() {
+    return new Promise((resolve) => {
+      if (!this.locked) {
+        this.locked = true;
+        resolve();
+      } else {
+        this.queue.push(resolve);
+      }
+    });
+  }
+
+  release() {
+    if (this.queue.length > 0) {
+      const next = this.queue.shift();
+      next();
+    } else {
+      this.locked = false;
+    }
+  }
+}
+
+const fileMutex = new FileMutex();
+
+function loadDbSync() {
   try {
     const raw = fs.readFileSync(DATA_PATH, 'utf-8');
     const json = JSON.parse(raw);
@@ -45,15 +75,44 @@ function loadDb() {
   }
 }
 
-function saveDb(db) {
+async function loadDb() {
+  await fileMutex.acquire();
+  try {
+    return loadDbSync();
+  } finally {
+    fileMutex.release();
+  }
+}
+
+async function saveDb(db) {
+  await fileMutex.acquire();
   try {
     fs.writeFileSync(DATA_PATH, JSON.stringify(db, null, 2), 'utf-8');
   } catch (e) {
     console.error('Failed to save stub-data.json:', e);
+  } finally {
+    fileMutex.release();
   }
 }
 
-const db = loadDb();
+// Charger les données initiales de manière synchrone au démarrage
+let db = loadDbSync();
+
+// Fonction pour recharger les données
+async function reloadData() {
+  const timestamp = new Date().toISOString();
+  console.log(`[STUB] Reloading data from stub-data.json at ${timestamp}`);
+  try {
+    db = await loadDb();
+    console.log(`[STUB] Data reloaded successfully at ${timestamp}`);
+  } catch (e) {
+    console.error(`[STUB] Failed to reload data at ${timestamp}:`, e);
+  }
+}
+
+// Recharger les données toutes les minutes
+const RELOAD_INTERVAL_MS = 60 * 1000; // 1 minute
+setInterval(reloadData, RELOAD_INTERVAL_MS);
 
 // GET /fournisseur/{idFournisseur}/hebergements
 app.get('/fournisseur/:idFournisseur/hebergements', (req, res) => {
@@ -92,7 +151,7 @@ app.get('/fournisseur/:idFournisseur/dossiers/:idDossier', (req, res) => {
 });
 
 // POST /fournisseur/{idFournisseur}/hebergements/{idHebergement}/stock
-app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', (req, res) => {
+app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', async (req, res) => {
   const { idFournisseur, idHebergement } = req.params;
   const key = `${idFournisseur}:${idHebergement}`;
   const payload = req.body ?? {};
@@ -105,7 +164,7 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', (req, 
       }
     }
     db.stock[key] = { jours: Array.from(byDate.values()).sort((a, b) => a.date.localeCompare(b.date)) };
-    saveDb(db);
+    await saveDb(db);
   }
   res.json({ ok: 1, data: { saved: true } });
 });
@@ -113,14 +172,14 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', (req, 
 // --- Admin: rate types & rates (fake data) ---
 
 // POST /fournisseur/{idFournisseur}/typetarifs  (create rate type)
-app.post('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
+app.post('/fournisseur/:idFournisseur/typetarifs', async (req, res) => {
   const { idFournisseur } = req.params;
   const payload = req.body ?? {};
   const list = db.rateTypes[String(idFournisseur)] || [];
   const nextId = (list.reduce((m, r) => Math.max(m, Number(r.idTypeTarif || 0)), 1000) + 1);
   const created = { idTypeTarif: nextId, ...payload, createdAt: new Date().toISOString() };
   db.rateTypes[String(idFournisseur)] = [...list, created];
-  saveDb(db);
+  await saveDb(db);
   res.json({
     ok: 1,
     data: created
@@ -151,13 +210,13 @@ app.get('/fournisseur/:idFournisseur/typetarifs', (req, res) => {
 });
 
 // PUT /fournisseur/{idFournisseur}/typetarifs/{idTypeTarif}  (update rate type)
-app.put('/fournisseur/:idFournisseur/typetarifs/:idTypeTarif', (req, res) => {
+app.put('/fournisseur/:idFournisseur/typetarifs/:idTypeTarif', async (req, res) => {
   const { idFournisseur, idTypeTarif } = req.params;
   const payload = req.body ?? {};
   const list = db.rateTypes[String(idFournisseur)] || [];
   const updated = list.map(r => Number(r.idTypeTarif) === Number(idTypeTarif) ? { ...r, ...payload, updatedAt: new Date().toISOString() } : r);
   db.rateTypes[String(idFournisseur)] = updated;
-  saveDb(db);
+  await saveDb(db);
   const result = updated.find(r => Number(r.idTypeTarif) === Number(idTypeTarif)) || { idTypeTarif: Number(idTypeTarif), ...payload };
   res.json({
     ok: 1,
@@ -199,7 +258,7 @@ app.get('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs', (r
 // POST /fournisseur/{idFournisseur}/hebergements/:idHebergement/typetarifs/tarif (set rates)
 // IMPORTANT: This route must be defined BEFORE the /typetarifs/:idTypeTarif route
 // to ensure Express matches the specific "tarif" path before the generic parameter route
-app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif', (req, res) => {
+app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tarif', async (req, res) => {
   console.log('[STUB] POST handler called!');
   try {
     const { idFournisseur, idHebergement } = req.params;
@@ -327,8 +386,8 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/typetarifs/tar
   
   const afterPeriodes = JSON.parse(JSON.stringify(db.rates[key].periodes));
   console.log(`[STUB] After (${afterPeriodes.length} periods):`, JSON.stringify(afterPeriodes, null, 2));
-  
-    saveDb(db);
+
+    await saveDb(db);
     console.log(`[STUB] Database saved to ${DATA_PATH}`);
     console.log(`[STUB] ========================================\n`);
     res.json({

@@ -162,8 +162,10 @@ Référence produit:
   - Installer les dépendances (une fois): `npm install`
   - Lancer: `npm run stub` → écoute sur `http://localhost:3000`
 - Base URL (SDK/Playground): `http://localhost:3000` (sans slash final).
-- Données persistées: fichier `stub-server/stub-data.json` (hébergements, dossiers, stock, types de tarif, tarifs). Les opérations d’écriture mettent à jour ce fichier.
+- Données persistées: fichier `stub-server/stub-data.json` (hébergements, dossiers, stock, types de tarif, tarifs). Les opérations d'écriture mettent à jour ce fichier.
 - Versionning des données: le fichier `stub-server/stub-data.json` est versionné dans le dépôt; les évolutions du jeu de données doivent passer par des commits/PRs modifiant ce fichier.
+- **Rechargement périodique** : Le serveur recharge automatiquement les données depuis `stub-data.json` toutes les minutes pour prendre en compte les modifications externes du fichier. Chaque rechargement est loggé dans la console avec un horodatage.
+- **Protection contre les accès concurrents** : Un mécanisme de verrouillage (mutex) protège le fichier contre les accès simultanés en lecture/écriture, évitant ainsi la corruption des données lors d'opérations concurrentes.
 - Endpoints couverts (exemples):
   - `GET /fournisseur/:idFournisseur/hebergements`
   - `GET /fournisseur/:idFournisseur/dossiers`
