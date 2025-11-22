@@ -88,6 +88,19 @@
           "montantTotal": 588,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-125",
+            "reference": "REF-LOC-RES-2025-001",
+            "dateCreation": "2025-01-10T14:20:00Z",
+            "dateModification": "2025-01-10T14:20:00Z",
+            "montant": 588,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -134,6 +147,19 @@
           "montantTotal": 658,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-126",
+            "reference": "REF-LOC-RES-2025-002",
+            "dateCreation": "2025-01-10T15:30:00Z",
+            "dateModification": "2025-01-10T15:30:00Z",
+            "montant": 658,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -180,6 +206,17 @@
           "montantTotal": 980,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionOpenSystem": {
+            "idTransaction": "TXN-OS-127",
+            "reference": "REF-OS-RES-2025-003",
+            "dateCreation": "2025-01-12T09:15:00Z",
+            "dateModification": "2025-01-12T09:15:00Z",
+            "montant": 980,
+            "devise": "EUR",
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -226,6 +263,20 @@
           "montantTotal": 588,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionBooking": {
+            "idTransaction": "TXN-BKG-128",
+            "reference": "REF-BKG-RES-2025-004",
+            "confirmationCode": "BKG-128-2025",
+            "dateCreation": "2025-01-12T10:00:00Z",
+            "dateModification": "2025-01-12T10:00:00Z",
+            "montant": 588,
+            "devise": "EUR",
+            "commission": 88.2,
+            "montantNet": 499.8,
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -272,6 +323,19 @@
           "montantTotal": 658,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-129",
+            "reference": "REF-LOC-RES-2025-005",
+            "dateCreation": "2025-01-15T11:30:00Z",
+            "dateModification": "2025-01-15T11:30:00Z",
+            "montant": 658,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -318,6 +382,17 @@
           "montantTotal": 1400,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionOpenSystem": {
+            "idTransaction": "TXN-OS-130",
+            "reference": "REF-OS-RES-2025-006",
+            "dateCreation": "2025-01-15T12:00:00Z",
+            "dateModification": "2025-01-15T12:00:00Z",
+            "montant": 1400,
+            "devise": "EUR",
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -364,6 +439,20 @@
           "montantTotal": 588,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionBooking": {
+            "idTransaction": "TXN-BKG-131",
+            "reference": "REF-BKG-RES-2025-007",
+            "confirmationCode": "BKG-131-2025",
+            "dateCreation": "2025-01-20T13:20:00Z",
+            "dateModification": "2025-01-20T13:20:00Z",
+            "montant": 588,
+            "devise": "EUR",
+            "commission": 88.2,
+            "montantNet": 499.8,
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -410,6 +499,19 @@
           "montantTotal": 987,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-132",
+            "reference": "REF-LOC-RES-2025-008",
+            "dateCreation": "2025-01-20T14:00:00Z",
+            "dateModification": "2025-01-20T14:00:00Z",
+            "montant": 987,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -456,6 +558,19 @@
           "montantTotal": 588,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-133",
+            "reference": "REF-LOC-RES-2025-009",
+            "dateCreation": "2025-01-25T08:30:00Z",
+            "dateModification": "2025-01-25T08:30:00Z",
+            "montant": 588,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -502,6 +617,20 @@
           "montantTotal": 1960,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionBooking": {
+            "idTransaction": "TXN-BKG-134",
+            "reference": "REF-BKG-RES-2025-010",
+            "confirmationCode": "BKG-134-2025",
+            "dateCreation": "2025-01-25T09:00:00Z",
+            "dateModification": "2025-01-25T09:00:00Z",
+            "montant": 1960,
+            "devise": "EUR",
+            "commission": 294,
+            "montantNet": 1666,
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -548,6 +677,19 @@
           "montantTotal": 658,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-135",
+            "reference": "REF-LOC-RES-2025-011",
+            "dateCreation": "2025-02-01T10:15:00Z",
+            "dateModification": "2025-02-01T10:15:00Z",
+            "montant": 658,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
         }
       },
       {
@@ -594,6 +736,17 @@
           "montantTotal": 588,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionOpenSystem": {
+            "idTransaction": "TXN-OS-136",
+            "reference": "REF-OS-RES-2025-012",
+            "dateCreation": "2025-02-01T11:00:00Z",
+            "dateModification": "2025-02-01T11:00:00Z",
+            "montant": 588,
+            "devise": "EUR",
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -640,6 +793,17 @@
           "montantTotal": 658,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionOpenSystem": {
+            "idTransaction": "TXN-OS-137",
+            "reference": "REF-OS-RES-2025-013",
+            "dateCreation": "2025-02-05T14:45:00Z",
+            "dateModification": "2025-02-05T14:45:00Z",
+            "montant": 658,
+            "devise": "EUR",
+            "statut": "confirme"
+          }
         }
       },
       {
@@ -686,6 +850,20 @@
           "montantTotal": 1540,
           "devise": "EUR",
           "transactions": []
+        },
+        "transaction": {
+          "transactionBooking": {
+            "idTransaction": "TXN-BKG-138",
+            "reference": "REF-BKG-RES-2025-014",
+            "confirmationCode": "BKG-138-2025",
+            "dateCreation": "2025-02-05T15:30:00Z",
+            "dateModification": "2025-02-05T15:30:00Z",
+            "montant": 1540,
+            "devise": "EUR",
+            "commission": 231,
+            "montantNet": 1309,
+            "statut": "confirme"
+          }
         }
       }
     ],
