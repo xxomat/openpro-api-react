@@ -511,6 +511,183 @@
             "statut": "confirme"
           }
         }
+      },
+      {
+        "idDossier": 139,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-2031237118",
+        "dateCreation": "2025-11-23 08:19:38",
+        "dateModification": "2025-11-23 08:19:38",
+        "client": {
+          "civilite": "M",
+          "nom": "Steiner",
+          "prenom": "Mathieu",
+          "email": "mathieu.steiner@gmail.com",
+          "telephone": "+33664951378",
+          "remarques": "",
+          "adresse": "",
+          "codePostal": "",
+          "ville": "",
+          "pays": "",
+          "dateNaissance": "",
+          "nationalite": "",
+          "profession": "",
+          "societe": "",
+          "siret": "",
+          "tva": "",
+          "langue": "fr",
+          "newsletter": false,
+          "cgvAcceptees": true
+        },
+        "hebergement": {
+          "idHebergement": 1,
+          "nom": "",
+          "dateArrivee": "2025-11-29",
+          "dateDepart": "2025-12-02",
+          "nbNuits": 3,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 252,
+          "devise": "EUR",
+          "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-2031237118",
+            "reference": "REF-LOC-RES-2025-2031237118",
+            "dateCreation": "2025-11-23 08:19:38",
+            "dateModification": "2025-11-23 08:19:38",
+            "montant": 252,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
+        }
+      },
+      {
+        "idDossier": 140,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-2119872640",
+        "dateCreation": "2025-11-23 08:19:38",
+        "dateModification": "2025-11-23 08:19:38",
+        "client": {
+          "civilite": "M",
+          "nom": "Steiner",
+          "prenom": "Mathieu",
+          "email": "mathieu.steiner@gmail.com",
+          "telephone": "+33664951378",
+          "remarques": "",
+          "adresse": "",
+          "codePostal": "",
+          "ville": "",
+          "pays": "",
+          "dateNaissance": "",
+          "nationalite": "",
+          "profession": "",
+          "societe": "",
+          "siret": "",
+          "tva": "",
+          "langue": "fr",
+          "newsletter": false,
+          "cgvAcceptees": true
+        },
+        "hebergement": {
+          "idHebergement": 2,
+          "nom": "",
+          "dateArrivee": "2025-11-29",
+          "dateDepart": "2025-12-02",
+          "nbNuits": 3,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 282,
+          "devise": "EUR",
+          "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-2119872640",
+            "reference": "REF-LOC-RES-2025-2119872640",
+            "dateCreation": "2025-11-23 08:19:38",
+            "dateModification": "2025-11-23 08:19:38",
+            "montant": 282,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
+        }
+      },
+      {
+        "idDossier": 141,
+        "idFournisseur": 47186,
+        "reference": "RES-2025-3238014675",
+        "dateCreation": "2025-11-23 08:19:38",
+        "dateModification": "2025-11-23 08:19:38",
+        "client": {
+          "civilite": "M",
+          "nom": "Steiner",
+          "prenom": "Mathieu",
+          "email": "mathieu.steiner@gmail.com",
+          "telephone": "+33664951378",
+          "remarques": "",
+          "adresse": "",
+          "codePostal": "",
+          "ville": "",
+          "pays": "",
+          "dateNaissance": "",
+          "nationalite": "",
+          "profession": "",
+          "societe": "",
+          "siret": "",
+          "tva": "",
+          "langue": "fr",
+          "newsletter": false,
+          "cgvAcceptees": true
+        },
+        "hebergement": {
+          "idHebergement": 3,
+          "nom": "",
+          "dateArrivee": "2025-11-29",
+          "dateDepart": "2025-12-02",
+          "nbNuits": 3,
+          "nbPersonnes": 2,
+          "typeTarif": {
+            "idTypeTarif": 1001,
+            "libelle": "Tarif public",
+            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
+          }
+        },
+        "paiement": {
+          "montantTotal": 390,
+          "devise": "EUR",
+          "transactions": []
+        },
+        "transaction": {
+          "transactionResaLocale": {
+            "idTransaction": "TXN-LOC-3238014675",
+            "reference": "REF-LOC-RES-2025-3238014675",
+            "dateCreation": "2025-11-23 08:19:38",
+            "dateModification": "2025-11-23 08:19:38",
+            "montant": 390,
+            "devise": "EUR",
+            "statut": "confirme",
+            "pointDeVente": "Site web",
+            "utilisateur": "client"
+          }
+        }
       }
     ],
     "55123": [],
@@ -1849,15 +2026,15 @@
         },
         {
           "date": "2025-11-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-02",
@@ -4773,15 +4950,15 @@
         },
         {
           "date": "2025-11-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-02",
@@ -7697,15 +7874,15 @@
         },
         {
           "date": "2025-11-29",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-11-30",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-01",
-          "dispo": 1
+          "dispo": 0
         },
         {
           "date": "2025-12-02",
