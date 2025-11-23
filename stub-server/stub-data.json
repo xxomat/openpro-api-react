@@ -45,124 +45,6 @@
   "dossiers": {
     "47186": [
       {
-        "idDossier": 125,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-001",
-        "dateCreation": "2025-01-10T14:20:00Z",
-        "dateModification": "2025-01-10T14:20:00Z",
-        "client": {
-          "civilite": "M",
-          "nom": "Martin",
-          "prenom": "Pierre",
-          "email": "pierre.martin@example.com",
-          "telephone": "+33612345678",
-          "remarques": "Client fidèle depuis 3 ans",
-          "adresse": "15 Rue de la République",
-          "codePostal": "75001",
-          "ville": "Paris",
-          "pays": "France",
-          "dateNaissance": "1985-03-15",
-          "nationalite": "Française",
-          "profession": "Ingénieur",
-          "societe": "Tech Solutions SAS",
-          "siret": "12345678901234",
-          "tva": "FR12345678901",
-          "langue": "fr",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 1,
-          "nom": "Noirmoutier",
-          "dateArrivee": "2025-06-15",
-          "dateDepart": "2025-06-22",
-          "nbNuits": 7,
-          "nbPersonnes": 2,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 588,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-125",
-            "reference": "REF-LOC-RES-2025-001",
-            "dateCreation": "2025-01-10T14:20:00Z",
-            "dateModification": "2025-01-10T14:20:00Z",
-            "montant": 588,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
-          }
-        }
-      },
-      {
-        "idDossier": 126,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-002",
-        "dateCreation": "2025-01-10T15:30:00Z",
-        "dateModification": "2025-01-10T15:30:00Z",
-        "client": {
-          "civilite": "Mme",
-          "nom": "López",
-          "prenom": "Sofia",
-          "email": "sofia.lopez@example.com",
-          "telephone": "+34698765432",
-          "remarques": "Préfère les chambres avec vue sur mer",
-          "adresse": "Calle Gran Vía 42",
-          "codePostal": "28013",
-          "ville": "Madrid",
-          "pays": "Espagne",
-          "dateNaissance": "1990-07-22",
-          "nationalite": "Espagnole",
-          "profession": "",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "es",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 2,
-          "nom": "Ceylan",
-          "dateArrivee": "2025-06-15",
-          "dateDepart": "2025-06-22",
-          "nbNuits": 7,
-          "nbPersonnes": 4,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 658,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-126",
-            "reference": "REF-LOC-RES-2025-002",
-            "dateCreation": "2025-01-10T15:30:00Z",
-            "dateModification": "2025-01-10T15:30:00Z",
-            "montant": 658,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
-          }
-        }
-      },
-      {
         "idDossier": 127,
         "idFournisseur": 47186,
         "reference": "RES-2025-003",
@@ -276,65 +158,6 @@
             "commission": 88.2,
             "montantNet": 499.8,
             "statut": "confirme"
-          }
-        }
-      },
-      {
-        "idDossier": 129,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-005",
-        "dateCreation": "2025-01-15T11:30:00Z",
-        "dateModification": "2025-01-15T11:30:00Z",
-        "client": {
-          "civilite": "Mme",
-          "nom": "Rossi",
-          "prenom": "Chiara",
-          "email": "chiara.rossi@example.com",
-          "telephone": "+393377889900",
-          "remarques": "Famille avec 2 enfants",
-          "adresse": "Via Roma 12",
-          "codePostal": "20121",
-          "ville": "Milan",
-          "pays": "Italie",
-          "dateNaissance": "1987-04-30",
-          "nationalite": "Italienne",
-          "profession": "",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "it",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 2,
-          "nom": "Ceylan",
-          "dateArrivee": "2025-08-01",
-          "dateDepart": "2025-08-08",
-          "nbNuits": 7,
-          "nbPersonnes": 4,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 658,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-129",
-            "reference": "REF-LOC-RES-2025-005",
-            "dateCreation": "2025-01-15T11:30:00Z",
-            "dateModification": "2025-01-15T11:30:00Z",
-            "montant": 658,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
           }
         }
       },
@@ -456,124 +279,6 @@
         }
       },
       {
-        "idDossier": 132,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-008",
-        "dateCreation": "2025-01-20T14:00:00Z",
-        "dateModification": "2025-01-20T14:00:00Z",
-        "client": {
-          "civilite": "M",
-          "nom": "García",
-          "prenom": "María",
-          "email": "maria.garcia@example.com",
-          "telephone": "+34622334455",
-          "remarques": "Grande famille - 6 personnes",
-          "adresse": "Passeig de Gràcia 19",
-          "codePostal": "08008",
-          "ville": "Barcelone",
-          "pays": "Espagne",
-          "dateNaissance": "1984-02-25",
-          "nationalite": "Espagnole",
-          "profession": "",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "es",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 2,
-          "nom": "Ceylan",
-          "dateArrivee": "2025-09-05",
-          "dateDepart": "2025-09-12",
-          "nbNuits": 7,
-          "nbPersonnes": 6,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 987,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-132",
-            "reference": "REF-LOC-RES-2025-008",
-            "dateCreation": "2025-01-20T14:00:00Z",
-            "dateModification": "2025-01-20T14:00:00Z",
-            "montant": 987,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
-          }
-        }
-      },
-      {
-        "idDossier": 133,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-009",
-        "dateCreation": "2025-01-25T08:30:00Z",
-        "dateModification": "2025-01-25T08:30:00Z",
-        "client": {
-          "civilite": "M",
-          "nom": "Simon",
-          "prenom": "David",
-          "email": "david.simon@example.com",
-          "telephone": "+33633445566",
-          "remarques": "Client régulier - 4ème séjour",
-          "adresse": "56 Rue du Port",
-          "codePostal": "44000",
-          "ville": "Nantes",
-          "pays": "France",
-          "dateNaissance": "1976-08-11",
-          "nationalite": "Française",
-          "profession": "Entrepreneur",
-          "societe": "Simon Industries",
-          "siret": "33445566778899",
-          "tva": "FR33445566778",
-          "langue": "fr",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 1,
-          "nom": "Noirmoutier",
-          "dateArrivee": "2025-10-15",
-          "dateDepart": "2025-10-22",
-          "nbNuits": 7,
-          "nbPersonnes": 2,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 588,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-133",
-            "reference": "REF-LOC-RES-2025-009",
-            "dateCreation": "2025-01-25T08:30:00Z",
-            "dateModification": "2025-01-25T08:30:00Z",
-            "montant": 588,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
-          }
-        }
-      },
-      {
         "idDossier": 134,
         "idFournisseur": 47186,
         "reference": "RES-2025-010",
@@ -630,65 +335,6 @@
             "commission": 294,
             "montantNet": 1666,
             "statut": "confirme"
-          }
-        }
-      },
-      {
-        "idDossier": 135,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-011",
-        "dateCreation": "2025-02-01T10:15:00Z",
-        "dateModification": "2025-02-01T10:15:00Z",
-        "client": {
-          "civilite": "M",
-          "nom": "Leroy",
-          "prenom": "François",
-          "email": "francois.leroy@example.com",
-          "telephone": "+32266778899",
-          "remarques": "Voyage de noces",
-          "adresse": "Rue de la Station 14",
-          "codePostal": "1000",
-          "ville": "Bruxelles",
-          "pays": "Belgique",
-          "dateNaissance": "1988-01-20",
-          "nationalite": "Belge",
-          "profession": "",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "fr",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 2,
-          "nom": "Ceylan",
-          "dateArrivee": "2025-11-20",
-          "dateDepart": "2025-11-27",
-          "nbNuits": 7,
-          "nbPersonnes": 4,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 658,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-135",
-            "reference": "REF-LOC-RES-2025-011",
-            "dateCreation": "2025-02-01T10:15:00Z",
-            "dateModification": "2025-02-01T10:15:00Z",
-            "montant": 658,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
           }
         }
       },
@@ -863,124 +509,6 @@
             "commission": 231,
             "montantNet": 1309,
             "statut": "confirme"
-          }
-        }
-      },
-      {
-        "idDossier": 139,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-015",
-        "dateCreation": "2025-10-15T10:00:00Z",
-        "dateModification": "2025-10-15T10:00:00Z",
-        "client": {
-          "civilite": "Mme",
-          "nom": "Dubois",
-          "prenom": "Marie",
-          "email": "marie.dubois@example.com",
-          "telephone": "+33698765432",
-          "remarques": "Séjour automnal",
-          "adresse": "12 Avenue des Champs-Élysées",
-          "codePostal": "75008",
-          "ville": "Paris",
-          "pays": "France",
-          "dateNaissance": "1988-05-20",
-          "nationalite": "Française",
-          "profession": "Architecte",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "fr",
-          "newsletter": false,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 1,
-          "nom": "Noirmoutier",
-          "dateArrivee": "2025-11-28",
-          "dateDepart": "2025-12-01",
-          "nbNuits": 3,
-          "nbPersonnes": 2,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 252,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-139",
-            "reference": "REF-LOC-RES-2025-015",
-            "dateCreation": "2025-10-15T10:00:00Z",
-            "dateModification": "2025-10-15T10:00:00Z",
-            "montant": 252,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
-          }
-        }
-      },
-      {
-        "idDossier": 140,
-        "idFournisseur": 47186,
-        "reference": "RES-2025-016",
-        "dateCreation": "2025-10-20T14:30:00Z",
-        "dateModification": "2025-10-20T14:30:00Z",
-        "client": {
-          "civilite": "M",
-          "nom": "Johnson",
-          "prenom": "James",
-          "email": "james.johnson@example.com",
-          "telephone": "+44123456789",
-          "remarques": "Week-end prolongé en famille",
-          "adresse": "25 Oxford Street",
-          "codePostal": "W1D 2DZ",
-          "ville": "London",
-          "pays": "Royaume-Uni",
-          "dateNaissance": "1985-09-12",
-          "nationalite": "Britannique",
-          "profession": "Consultant",
-          "societe": "",
-          "siret": "",
-          "tva": "",
-          "langue": "en",
-          "newsletter": true,
-          "cgvAcceptees": true
-        },
-        "hebergement": {
-          "idHebergement": 2,
-          "nom": "Ceylan",
-          "dateArrivee": "2025-11-28",
-          "dateDepart": "2025-12-03",
-          "nbNuits": 5,
-          "nbPersonnes": 4,
-          "typeTarif": {
-            "idTypeTarif": 1001,
-            "libelle": "Tarif public",
-            "description": "Tarif public annulable sans frais jusqu'au jour de votre arrivée"
-          }
-        },
-        "paiement": {
-          "montantTotal": 470,
-          "devise": "EUR",
-          "transactions": []
-        },
-        "transaction": {
-          "transactionResaLocale": {
-            "idTransaction": "TXN-LOC-140",
-            "reference": "REF-LOC-RES-2025-016",
-            "dateCreation": "2025-10-20T14:30:00Z",
-            "dateModification": "2025-10-20T14:30:00Z",
-            "montant": 470,
-            "devise": "EUR",
-            "statut": "confirme",
-            "pointDeVente": "Site web",
-            "utilisateur": "client"
           }
         }
       }
@@ -2317,15 +1845,15 @@
         },
         {
           "date": "2025-11-28",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-29",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-30",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-01",
@@ -5221,19 +4749,19 @@
         },
         {
           "date": "2025-11-23",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-24",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-25",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-26",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-27",
@@ -5241,23 +4769,23 @@
         },
         {
           "date": "2025-11-28",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-29",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-11-30",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-01",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-02",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-03",
@@ -5325,7 +4853,7 @@
         },
         {
           "date": "2025-12-19",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-20",
@@ -8249,7 +7777,7 @@
         },
         {
           "date": "2025-12-19",
-          "dispo": 0
+          "dispo": 1
         },
         {
           "date": "2025-12-20",
@@ -15948,6 +15476,44 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-12-06",
+          "fin": "2025-12-07",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 84
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-08",
+          "fin": "2025-12-10",
+          "ouvert": true,
+          "dureeMin": 2,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 100
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-11",
           "fin": "2025-12-31",
           "ouvert": true,
           "dureeMin": 1,
@@ -16123,6 +15689,44 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-12-06",
+          "fin": "2025-12-07",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 94
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-08",
+          "fin": "2025-12-10",
+          "ouvert": true,
+          "dureeMin": 2,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 100
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-11",
           "fin": "2025-12-31",
           "ouvert": true,
           "dureeMin": 1,
@@ -16273,7 +15877,7 @@
           "debut": "2025-12-03",
           "fin": "2025-12-03",
           "ouvert": true,
-          "dureeMin": 10000,
+          "dureeMin": 2,
           "dureeMax": 30,
           "arriveeAutorisee": true,
           "departAutorise": true,
@@ -16362,7 +15966,7 @@
         {
           "idTypeTarif": 1001,
           "debut": "2025-12-06",
-          "fin": "2025-12-31",
+          "fin": "2025-12-07",
           "ouvert": true,
           "dureeMin": 1,
           "dureeMax": 30,
@@ -16408,6 +16012,59 @@
                 "type": "pension_complete",
                 "nbPers": 2,
                 "prix": 180
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-08",
+          "fin": "2025-12-10",
+          "ouvert": true,
+          "dureeMin": 2,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "base",
+                "nbPers": 2,
+                "prix": 100
+              }
+            ]
+          }
+        },
+        {
+          "idTypeTarif": 1001,
+          "debut": "2025-12-11",
+          "fin": "2025-12-31",
+          "ouvert": true,
+          "dureeMin": 1,
+          "dureeMax": 30,
+          "arriveeAutorisee": true,
+          "departAutorise": true,
+          "tarifPax": {
+            "listeTarifPaxOccupation": [
+              {
+                "type": "occupation",
+                "nbPers": 1,
+                "prix": 100
+              },
+              {
+                "type": "occupation",
+                "nbPers": 2,
+                "prix": 130
+              },
+              {
+                "type": "occupation",
+                "nbPers": 3,
+                "prix": 140
+              },
+              {
+                "type": "occupation",
+                "nbPers": 4,
+                "prix": 145
               }
             ]
           }

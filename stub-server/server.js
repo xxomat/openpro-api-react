@@ -150,6 +150,159 @@ app.get('/fournisseur/:idFournisseur/dossiers/:idDossier', (req, res) => {
   });
 });
 
+// DELETE /fournisseur/{idFournisseur}/dossiers/{idDossier} (delete booking/dossier)
+app.delete('/fournisseur/:idFournisseur/dossiers/:idDossier', async (req, res) => {
+  console.log(`[STUB] DELETE /fournisseur/${req.params.idFournisseur}/dossiers/${req.params.idDossier} called`);
+  const { idFournisseur, idDossier } = req.params;
+  
+  try {
+    // Initialiser la liste des dossiers pour ce fournisseur si elle n'existe pas
+    if (!db.dossiers[String(idFournisseur)]) {
+      db.dossiers[String(idFournisseur)] = [];
+    }
+    
+    const list = db.dossiers[String(idFournisseur)];
+    const index = list.findIndex(d => Number(d.idDossier) === Number(idDossier));
+    
+    if (index === -1) {
+      // Dossier non trouvé
+      res.status(404).json({
+        ok: 0,
+        error: 'Booking not found'
+      });
+      return;
+    }
+    
+    // Supprimer le dossier
+    list.splice(index, 1);
+    
+    // Sauvegarder dans le fichier
+    await saveDb(db);
+    
+    console.log(`[STUB] Deleted dossier ${idDossier} for supplier ${idFournisseur}`);
+    
+    res.json({
+      ok: 1,
+      data: { deleted: true, idDossier: Number(idDossier) }
+    });
+  } catch (error) {
+    console.error('[STUB] ERROR in DELETE /dossiers:', error);
+    res.status(500).json({
+      ok: 0,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+// POST /fournisseur/{idFournisseur}/dossiers (create booking/dossier)
+app.post('/fournisseur/:idFournisseur/dossiers', async (req, res) => {
+  const { idFournisseur } = req.params;
+  const payload = req.body ?? {};
+  
+  try {
+    // Initialiser la liste des dossiers pour ce fournisseur si elle n'existe pas
+    if (!db.dossiers[String(idFournisseur)]) {
+      db.dossiers[String(idFournisseur)] = [];
+    }
+    
+    // Générer un nouvel idDossier (max + 1 ou 1 si vide)
+    const existingDossiers = db.dossiers[String(idFournisseur)];
+    const maxId = existingDossiers.length > 0 
+      ? Math.max(...existingDossiers.map(d => Number(d.idDossier) || 0))
+      : 0;
+    const newIdDossier = maxId + 1;
+    
+    // Récupérer le nom de l'hébergement depuis les données du stub
+    const idHebergement = payload.hebergement?.idHebergement || payload.idHebergement || 0;
+    const hebergements = db.hebergements[String(idFournisseur)] || [];
+    const hebergementData = hebergements.find(h => 
+      (h.idHebergement || h.cleHebergement?.idHebergement) === Number(idHebergement)
+    );
+    const hebergementNom = hebergementData?.nom || hebergementData?.nomHebergement || payload.hebergement?.nom || '';
+    
+    // Créer le nouveau dossier avec les données du payload
+    const now = new Date().toISOString();
+    const newDossier = {
+      idDossier: newIdDossier,
+      idFournisseur: Number(idFournisseur),
+      reference: payload.reference || `RES-${new Date().getFullYear()}-${String(newIdDossier).padStart(3, '0')}`,
+      dateCreation: payload.dateCreation || now,
+      dateModification: payload.dateModification || now,
+      client: payload.client || {
+        civilite: payload.clientCivilite || 'M',
+        nom: payload.clientNom || '',
+        prenom: payload.clientPrenom || '',
+        email: payload.clientEmail || '',
+        telephone: payload.clientTelephone || '',
+        remarques: payload.clientRemarques || '',
+        adresse: payload.clientAdresse || '',
+        codePostal: payload.clientCodePostal || '',
+        ville: payload.clientVille || '',
+        pays: payload.clientPays || '',
+        dateNaissance: payload.clientDateNaissance || '',
+        nationalite: payload.clientNationalite || '',
+        profession: payload.clientProfession || '',
+        societe: payload.clientSociete || '',
+        siret: payload.clientSiret || '',
+        tva: payload.clientTva || '',
+        langue: payload.clientLangue || 'fr',
+        newsletter: payload.clientNewsletter || false,
+        cgvAcceptees: payload.clientCgvAcceptees || true
+      },
+      hebergement: payload.hebergement || {
+        idHebergement: idHebergement,
+        nom: hebergementNom,
+        dateArrivee: payload.dateArrivee || '',
+        dateDepart: payload.dateDepart || '',
+        nbNuits: payload.nbNuits || 0,
+        nbPersonnes: payload.nbPersonnes || 0,
+        typeTarif: payload.typeTarif || {
+          idTypeTarif: 1001,
+          libelle: 'Tarif public',
+          description: 'Tarif public annulable sans frais jusqu\'au jour de votre arrivée'
+        }
+      },
+      paiement: payload.paiement || {
+        montantTotal: payload.montantTotal || 0,
+        devise: payload.devise || 'EUR',
+        transactions: []
+      },
+      transaction: payload.transaction || {
+        transactionResaLocale: {
+          idTransaction: `TXN-LOC-${newIdDossier}`,
+          reference: `REF-LOC-${payload.reference || `RES-${new Date().getFullYear()}-${String(newIdDossier).padStart(3, '0')}`}`,
+          dateCreation: now,
+          dateModification: now,
+          montant: payload.montantTotal || 0,
+          devise: payload.devise || 'EUR',
+          statut: 'confirme',
+          pointDeVente: 'Site web',
+          utilisateur: 'client'
+        }
+      }
+    };
+    
+    // Ajouter le nouveau dossier à la liste
+    db.dossiers[String(idFournisseur)].push(newDossier);
+    
+    // Sauvegarder dans le fichier
+    await saveDb(db);
+    
+    console.log(`[STUB] Created dossier ${newIdDossier} for supplier ${idFournisseur}`);
+    
+    res.json({
+      ok: 1,
+      data: newDossier
+    });
+  } catch (error) {
+    console.error('[STUB] ERROR in POST /dossiers:', error);
+    res.status(500).json({
+      ok: 0,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 // POST /fournisseur/{idFournisseur}/hebergements/{idHebergement}/stock
 app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', async (req, res) => {
   const { idFournisseur, idHebergement } = req.params;
@@ -455,6 +608,15 @@ app.get('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', (req, r
       idHebergement: Number(idHebergement),
       jours
     }
+  });
+});
+
+// 404 handler (must be last)
+app.use((req, res) => {
+  console.log(`[STUB] 404 - Route not found: ${req.method} ${req.path}`);
+  res.status(404).json({
+    ok: 0,
+    error: `Route not found: ${req.method} ${req.path}`
   });
 });
 
