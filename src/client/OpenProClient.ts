@@ -40,7 +40,31 @@ async function requestJson<T>(
   path: string,
   init?: RequestInit
 ): Promise<T> {
-  const res = await fetch(`${cfg.baseUrl}${path}`, {
+  const method = init?.method || 'GET';
+  const fullUrl = `${cfg.baseUrl}${path}`;
+  const startTime = Date.now();
+  
+  // Préparer les données à logger
+  const logData: Record<string, unknown> = {
+    method,
+    url: fullUrl,
+    path
+  };
+  
+  // Logger le body si présent
+  if (init?.body) {
+    try {
+      const bodyJson = typeof init.body === 'string' ? JSON.parse(init.body) : init.body;
+      logData.body = bodyJson;
+    } catch {
+      logData.body = init.body;
+    }
+  }
+  
+  // Logger l'appel OpenPro avec tous les détails
+  console.log(`[OpenPro API] ${method} ${fullUrl}`, logData);
+  
+  const res = await fetch(fullUrl, {
     ...init,
     headers: {
       'Authorization': `OsApiKey ${cfg.apiKey}`,
@@ -57,9 +81,18 @@ async function requestJson<T>(
     // ignore, will be handled below
   }
 
+  const duration = Date.now() - startTime;
+  
   if (!res.ok) {
+    console.error(`[OpenPro API] ${method} ${fullUrl} → ${res.status} (${duration}ms)`, {
+      error: json ?? text,
+      request: logData
+    });
     throw new OpenProHttpError(`HTTP ${res.status}`, res.status, json ?? text);
   }
+
+  // Logger la réponse réussie avec la durée
+  console.log(`[OpenPro API] ${method} ${fullUrl} → ${res.status} (${duration}ms)`);
 
   return json as T;
 }
