@@ -308,12 +308,29 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', async 
   const { idFournisseur, idHebergement } = req.params;
   const key = `${idFournisseur}:${idHebergement}`;
   const payload = req.body ?? {};
-  if (payload && Array.isArray(payload.jours)) {
+  
+  // Accepter les deux formats : listeStock (swagger) ou jours (ancien format stub)
+  let stockItems = [];
+  if (payload && Array.isArray(payload.listeStock)) {
+    // Format swagger : { listeStock: [{ date, stock }] }
+    stockItems = payload.listeStock.map(item => ({
+      date: item.date,
+      dispo: Number(item.stock ?? 0)
+    }));
+  } else if (payload && Array.isArray(payload.jours)) {
+    // Format ancien stub : { jours: [{ date, dispo }] }
+    stockItems = payload.jours.map(j => ({
+      date: j.date,
+      dispo: Number(j.dispo ?? 0)
+    }));
+  }
+  
+  if (stockItems.length > 0) {
     const existing = db.stock[key] || { jours: [] };
     const byDate = new Map(existing.jours.map(j => [j.date, j]));
-    for (const j of payload.jours) {
-      if (j && j.date) {
-        byDate.set(j.date, { date: j.date, dispo: Number(j.dispo ?? 0) });
+    for (const item of stockItems) {
+      if (item && item.date) {
+        byDate.set(item.date, { date: item.date, dispo: item.dispo });
       }
     }
     db.stock[key] = { jours: Array.from(byDate.values()).sort((a, b) => a.date.localeCompare(b.date)) };

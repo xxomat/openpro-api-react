@@ -44,25 +44,19 @@ async function requestJson<T>(
   const fullUrl = `${cfg.baseUrl}${path}`;
   const startTime = Date.now();
   
-  // Préparer les données à logger
-  const logData: Record<string, unknown> = {
-    method,
-    url: fullUrl,
-    path
-  };
+  // Logger l'appel OpenPro
+  console.log(`[OpenPro API] ${method} ${fullUrl}`);
   
-  // Logger le body si présent
+  // Logger le body si présent (avec JSON stringifié pour éviter [Object])
   if (init?.body) {
     try {
       const bodyJson = typeof init.body === 'string' ? JSON.parse(init.body) : init.body;
-      logData.body = bodyJson;
+      console.log(JSON.stringify(bodyJson, null, 2));
     } catch {
-      logData.body = init.body;
+      // Si le parsing échoue, afficher tel quel
+      console.log(init.body);
     }
   }
-  
-  // Logger l'appel OpenPro avec tous les détails
-  console.log(`[OpenPro API] ${method} ${fullUrl}`, logData);
   
   const res = await fetch(fullUrl, {
     ...init,
@@ -84,10 +78,12 @@ async function requestJson<T>(
   const duration = Date.now() - startTime;
   
   if (!res.ok) {
-    console.error(`[OpenPro API] ${method} ${fullUrl} → ${res.status} (${duration}ms)`, {
-      error: json ?? text,
-      request: logData
-    });
+    console.error(`[OpenPro API] ${method} ${fullUrl} → ${res.status} (${duration}ms)`);
+    if (json) {
+      console.error(JSON.stringify(json, null, 2));
+    } else {
+      console.error(text);
+    }
     throw new OpenProHttpError(`HTTP ${res.status}`, res.status, json ?? text);
   }
 
@@ -191,12 +187,32 @@ export function createOpenProClient<R extends Role>(
 
   const admin: AdminSurface = {
     async updateStock(idFournisseur, idHebergement, payload) {
+      // Transformer le payload de { jours: [{ date, dispo }] } vers { listeStock: [{ date, stock }] }
+      // selon le swagger OpenPro qui attend listeStock avec stock (pas jours avec dispo)
+      let transformedPayload: { listeStock: Array<{ date: string; stock: number }> };
+      
+      if (payload && typeof payload === 'object' && 'jours' in payload && Array.isArray((payload as any).jours)) {
+        // Format backend: { jours: [{ date, dispo }] } -> Format OpenPro: { listeStock: [{ date, stock }] }
+        transformedPayload = {
+          listeStock: ((payload as any).jours as Array<{ date: string; dispo: number }>).map(j => ({
+            date: j.date,
+            stock: j.dispo
+          }))
+        };
+      } else if (payload && typeof payload === 'object' && 'listeStock' in payload) {
+        // Déjà au bon format selon le swagger
+        transformedPayload = payload as { listeStock: Array<{ date: string; stock: number }> };
+      } else {
+        // Format inconnu, essayer de passer tel quel (pour compatibilité)
+        transformedPayload = payload as { listeStock: Array<{ date: string; stock: number }> };
+      }
+      
       const resp = await requestJson<ApiResponse<Record<string, never>>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/stock`,
         {
           method: 'POST',
-          body: JSON.stringify(payload)
+          body: JSON.stringify(transformedPayload)
         }
       );
       unwrapOk(resp);
