@@ -144,14 +144,13 @@ export type DossierWebhookListe = {
 
 // Stock (GET /fournisseur/{idFournisseur}/hebergements/{idHebergement}/stock)
 export type StockJour = {
-  jour?: string;                // YYYY-MM-DD
-  stock?: number;               // remaining stock
-  ouvert?: boolean;             // open for booking
+  date: string;                // YYYY-MM-DD
+  valeur: number;               // remaining stock
 } & Record<string, unknown>;
 
 export type StockResponse = {
   // The Swagger points to ReponseStock; keeping flexible but structured
-  stock?: StockJour[];
+  listeStock: StockJour[];
 } & Record<string, unknown>;
 
 // Tarifs (read)

@@ -619,11 +619,15 @@ app.get('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', (req, r
   if (end) {
     jours = jours.filter(j => j.date <= String(end));
   }
+  // Transformer vers le format OpenPro : { listeStock: [{ date, valeur }] }
+  const listeStock = jours.map(j => ({
+    date: j.date,
+    valeur: j.dispo ?? 0
+  }));
   res.json({
     ok: 1,
     data: {
-      idHebergement: Number(idHebergement),
-      jours
+      listeStock
     }
   });
 });
