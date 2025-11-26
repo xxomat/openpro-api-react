@@ -28,13 +28,29 @@ export type AccommodationListResponse = {
   listeHebergement: AccommodationHeader[];
 };
 
+// Type pour un résumé de dossier dans la liste
+export type BookingSummary = {
+  cleDossier: {
+    idFournisseur: number;
+    idDossier: number;
+  };
+  dateCreation: string;  // Format DateXml
+  dateModification: string;  // Format DateXml
+} & Record<string, unknown>;
+
+// Type pour les informations de pagination
+export type BookingListInfoPage = {
+  index: number;
+  nbPage: number;
+  nbParPage: number;
+  nbTotal: number;
+} & Record<string, unknown>;
+
+// Type pour la réponse réelle de l'API listBookings
 export type BookingListResponse = {
-  dossiers?: unknown[];
-  // common listing scaffolding from Swagger (kept optional)
-  nbTotal?: number;
-  pageCourante?: number;
-  nbPages?: number;
-};
+  infoPage: BookingListInfoPage;
+  liste: BookingSummary[];
+} & Record<string, unknown>;
 
 export type BookingDetailResponse = Record<string, unknown>;
 
@@ -323,11 +339,7 @@ export type Booking = {
   transaction?: DossierTransaction;  // Informations sur la provenance de la réservation
 } & Record<string, unknown>;
 
-export type BookingList = {
-  dossiers?: Booking[];
-  nbTotal?: number;
-  pageCourante?: number;
-  nbPages?: number;
-};
+// Type pour la liste de réservations (alias de BookingListResponse pour compatibilité)
+export type BookingList = BookingListResponse;
 
 

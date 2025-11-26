@@ -24,6 +24,51 @@ import {
 
 type Role = 'customer' | 'admin';
 
+/**
+ * Formate une date au format DateXml (2017-01-12T12:00:00+01:00)
+ * 
+ * @param date - Date sous forme de string, Date object, ou timestamp
+ * @returns Date formatée en DateXml avec fuseau horaire
+ */
+function formatDateXml(date: string | Date | number): string {
+  let dateObj: Date;
+  
+  if (typeof date === 'string') {
+    // Si c'est déjà au format DateXml (contient + ou - suivi de HH:MM), le retourner tel quel
+    if (/[+-]\d{2}:\d{2}$/.test(date)) {
+      return date;
+    }
+    // Sinon, parser la string
+    dateObj = new Date(date);
+  } else if (typeof date === 'number') {
+    dateObj = new Date(date);
+  } else {
+    dateObj = date;
+  }
+  
+  // Vérifier que la date est valide
+  if (isNaN(dateObj.getTime())) {
+    throw new Error(`Invalid date: ${date}`);
+  }
+  
+  // Formater la date au format ISO avec le fuseau horaire local
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const hours = String(dateObj.getHours()).padStart(2, '0');
+  const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+  const seconds = String(dateObj.getSeconds()).padStart(2, '0');
+  
+  // Obtenir le décalage de fuseau horaire
+  const offset = -dateObj.getTimezoneOffset(); // Inverser car getTimezoneOffset retourne l'offset en minutes
+  const offsetHours = Math.floor(Math.abs(offset) / 60);
+  const offsetMinutes = Math.abs(offset) % 60;
+  const offsetSign = offset >= 0 ? '+' : '-';
+  const offsetString = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
+  
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetString}`;
+}
+
 function toSearchParams(params?: Record<string, unknown>): string {
   if (!params) return '';
   const flat: Record<string, string> = {};
@@ -149,7 +194,23 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async listBookings(idFournisseur: number, params?: ListBookingsParams) {
-      const search = toSearchParams(params as unknown as Record<string, unknown>);
+      // Formater les paramètres de date au format DateXml si présents
+      const formattedParams: ListBookingsParams = { ...params };
+      const dateFields: Array<keyof Pick<ListBookingsParams, 'dateCreationDepuis' | 'dateCreationJusqua' | 'dateModificationDepuis' | 'dateModificationJusqua'>> = [
+        'dateCreationDepuis',
+        'dateCreationJusqua',
+        'dateModificationDepuis',
+        'dateModificationJusqua'
+      ];
+      
+      for (const field of dateFields) {
+        const dateValue = formattedParams[field];
+        if (dateValue && typeof dateValue === 'string') {
+          (formattedParams as Record<string, string>)[field] = formatDateXml(dateValue);
+        }
+      }
+      
+      const search = toSearchParams(formattedParams as unknown as Record<string, unknown>);
       const resp = await requestJson<ApiResponse<BookingList>>(
         config,
         `/fournisseur/${idFournisseur}/dossiers${search}`,

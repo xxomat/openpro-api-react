@@ -348,8 +348,8 @@ export function App() {
           })()}
           {lastType === 'bookings' && (() => {
             const data = lastData as BookingList | null;
-            const count = data?.dossiers?.length ?? 0;
-            const refs = (data?.dossiers ?? []).slice(0, 3).map((d: any) => d?.reference).filter(Boolean);
+            const count = data?.liste?.length ?? 0;
+            const refs = (data?.liste ?? []).slice(0, 3).map((d: any) => d?.cleDossier?.idDossier).filter(Boolean);
             return <div>Bookings: {count}{refs.length ? ` — sample: ${refs.join(', ')}` : ''}</div>;
           })()}
           {lastType === 'booking' && (() => {
