@@ -312,10 +312,10 @@ app.post('/fournisseur/:idFournisseur/hebergements/:idHebergement/stock', async 
   // Accepter les deux formats : listeStock (swagger) ou jours (ancien format stub)
   let stockItems = [];
   if (payload && Array.isArray(payload.listeStock)) {
-    // Format swagger : { listeStock: [{ date, stock }] }
+    // Format OpenPro : { listeStock: [{ date, valeur }] }
     stockItems = payload.listeStock.map(item => ({
       date: item.date,
-      dispo: Number(item.stock ?? 0)
+      dispo: Number(item.valeur ?? item.stock ?? 0)
     }));
   } else if (payload && Array.isArray(payload.jours)) {
     // Format ancien stub : { jours: [{ date, dispo }] }

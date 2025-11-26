@@ -187,24 +187,34 @@ export function createOpenProClient<R extends Role>(
 
   const admin: AdminSurface = {
     async updateStock(idFournisseur, idHebergement, payload) {
-      // Transformer le payload de { jours: [{ date, dispo }] } vers { listeStock: [{ date, stock }] }
-      // selon le swagger OpenPro qui attend listeStock avec stock (pas jours avec dispo)
-      let transformedPayload: { listeStock: Array<{ date: string; stock: number }> };
+      // Transformer le payload de { jours: [{ date, dispo }] } vers { listeStock: [{ date, valeur }] }
+      // selon l'API OpenPro qui attend listeStock avec valeur (pas stock)
+      let transformedPayload: { listeStock: Array<{ date: string; valeur: number }> };
       
       if (payload && typeof payload === 'object' && 'jours' in payload && Array.isArray((payload as any).jours)) {
-        // Format backend: { jours: [{ date, dispo }] } -> Format OpenPro: { listeStock: [{ date, stock }] }
+        // Format backend: { jours: [{ date, dispo }] } -> Format OpenPro: { listeStock: [{ date, valeur }] }
         transformedPayload = {
           listeStock: ((payload as any).jours as Array<{ date: string; dispo: number }>).map(j => ({
             date: j.date,
-            stock: j.dispo
+            valeur: j.dispo
           }))
         };
       } else if (payload && typeof payload === 'object' && 'listeStock' in payload) {
-        // Déjà au bon format selon le swagger
-        transformedPayload = payload as { listeStock: Array<{ date: string; stock: number }> };
+        // Déjà au format listeStock, mais il faut s'assurer que c'est 'valeur' et non 'stock'
+        const listeStock = (payload as any).listeStock;
+        if (Array.isArray(listeStock)) {
+          transformedPayload = {
+            listeStock: listeStock.map((item: any) => ({
+              date: item.date,
+              valeur: item.valeur ?? item.stock ?? item.dispo
+            }))
+          };
+        } else {
+          transformedPayload = payload as { listeStock: Array<{ date: string; valeur: number }> };
+        }
       } else {
         // Format inconnu, essayer de passer tel quel (pour compatibilité)
-        transformedPayload = payload as { listeStock: Array<{ date: string; stock: number }> };
+        transformedPayload = payload as { listeStock: Array<{ date: string; valeur: number }> };
       }
       
       const resp = await requestJson<ApiResponse<Record<string, never>>>(
