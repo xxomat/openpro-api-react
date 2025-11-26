@@ -219,12 +219,14 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async getBooking(idFournisseur: number, idDossier: number) {
-      const resp = await requestJson<ApiResponse<Booking>>(
+      const resp = await requestJson<ApiResponse<import('./types').BookingDetailResponse>>(
         config,
         `/fournisseur/${idFournisseur}/dossiers/${idDossier}`,
         { method: 'GET' }
       );
-      return unwrapOk(resp);
+      const detailResponse = unwrapOk(resp);
+      // Retourner directement le dossier pour compatibilité avec le code existant
+      return detailResponse.dossier;
     },
     async getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>) {
       const search = toSearchParams(params);

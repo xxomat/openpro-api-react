@@ -52,7 +52,96 @@ export type BookingListResponse = {
   liste: BookingSummary[];
 } & Record<string, unknown>;
 
-export type BookingDetailResponse = Record<string, unknown>;
+// Type pour le contact dans un dossier
+export type BookingContact = {
+  societe?: string | null;
+  nom?: string;
+  prenom?: string;
+  adresse?: string;
+  adresseComplement?: string;
+  pays?: string;
+  codePostal?: string;
+  ville?: string;
+  telephone1?: string;
+  telephone2?: string;
+  telephone3?: string | null;
+  fax?: string;
+  email?: string;
+  remarques?: string | null;
+} & Record<string, unknown>;
+
+// Type pour un hébergement dans listeHebergement
+export type BookingHebergementItem = {
+  nom?: string;
+  cleHebergement: {
+    idFournisseur: number;
+    idHebergement: number;
+  };
+  sejour: {
+    debut: string;  // YYYY-MM-DD
+    fin: string;   // YYYY-MM-DD
+  };
+  montantUnitaire?: number;
+  quantite?: number;
+  montant?: number;
+  pax?: {
+    nbPers?: number;
+    listeAge?: Array<{
+      intitule?: string;
+      quantite?: number;
+    }>;
+  };
+  tarif?: {
+    intitule?: string;
+    type?: string;
+    typeTarif?: {
+      idTypeTarif?: number;
+      libelle?: string;
+      description?: string;
+      detailPrix?: unknown;
+    };
+  };
+  remarques?: string | null;
+  listeSupplementHebergement?: unknown[];
+} & Record<string, unknown>;
+
+// Type pour la transaction dans un dossier
+export type BookingDossierTransaction = {
+  type?: string;  // "OpenSystem", "ResaLocale", "Xotelia", "Booking"
+  transactionOpenSystem?: {
+    idReservation?: string;
+    idTransaction?: string | null;
+    distributeur?: {
+      idRechCompte?: string;
+      domaine?: string;
+    };
+  } | null;
+  transactionResaLocale?: unknown | null;
+  transactionXotelia?: unknown | null;
+  transactionBooking?: unknown | null;
+} & Record<string, unknown>;
+
+// Type pour un dossier complet
+export type BookingDossier = {
+  cleDossier: {
+    idFournisseur: number;
+    idDossier: number;
+  };
+  dateCreation: string;  // Format DateXml
+  dateModification: string;  // Format DateXml
+  devise?: string;
+  optin?: unknown | null;
+  transaction?: BookingDossierTransaction;
+  contact?: BookingContact;
+  listeHebergement?: BookingHebergementItem[];
+  listeSupplementGlobal?: unknown[];
+  listeReglement?: unknown[];
+} & Record<string, unknown>;
+
+// Type pour la réponse réelle de l'API getBooking
+export type BookingDetailResponse = {
+  dossier: BookingDossier;
+} & Record<string, unknown>;
 
 export type RateType = {
   idTypeTarif: number;
@@ -327,17 +416,10 @@ export type DossierTransaction = {
   transactionBooking?: DossierTransactionBooking;  // Réservation depuis Booking.com
 } & Record<string, unknown>;
 
-export type Booking = {
-  idDossier?: number;
-  idFournisseur?: number;
-  reference?: string;
-  dateCreation?: string;
-  dateModification?: string;
-  client?: BookingCustomer;
-  hebergement?: BookingAccommodation;
-  paiement?: BookingPayment;
-  transaction?: DossierTransaction;  // Informations sur la provenance de la réservation
-} & Record<string, unknown>;
+// Type Booking pour compatibilité (alias de BookingDossier)
+// Note: Le format réel de l'API retourne { dossier: BookingDossier }
+// Ce type est conservé pour compatibilité avec le code existant
+export type Booking = BookingDossier;
 
 // Type pour la liste de réservations (alias de BookingListResponse pour compatibilité)
 export type BookingList = BookingListResponse;

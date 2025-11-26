@@ -354,7 +354,9 @@ export function App() {
           })()}
           {lastType === 'booking' && (() => {
             const d = lastData as Booking | null;
-            return <div>Booking #{d?.idDossier} — {d?.reference} — {d?.hebergement?.dateArrivee} → {d?.hebergement?.dateDepart}</div>;
+            // Le nouveau format a listeHebergement au lieu de hebergement
+            const firstHebergement = d?.listeHebergement?.[0];
+            return <div>Booking #{d?.cleDossier?.idDossier} — {firstHebergement?.sejour?.debut} → {firstHebergement?.sejour?.fin}</div>;
           })()}
           {lastType === 'rates' && (() => {
             const r = lastData as RatesListResponse | null;
