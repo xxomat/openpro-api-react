@@ -19,7 +19,10 @@ import {
   TypeTarifAjout,
   TypeTarifModif,
   RequeteTarifModif,
-  ReponseLiaisonHebergementTypeTarifListe
+  ReponseTarifModif,
+  ReponseLiaisonHebergementTypeTarifListe,
+  ReponseWebhookAjout,
+  ReponseWebhookSuppr
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -170,10 +173,10 @@ export interface AdminSurface {
   linkRateTypeToAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   unlinkRateTypeFromAccommodation(idFournisseur: number, idHebergement: number, idTypeTarif: number): Promise<void>;
   listAccommodationRateTypeLinks(idFournisseur: number, idHebergement: number): Promise<ReponseLiaisonHebergementTypeTarifListe>;
-  setRates(idFournisseur: number, idHebergement: number, payload: RequeteTarifModif): Promise<{ warnings?: unknown[] } | Record<string, unknown>>;
+  setRates(idFournisseur: number, idHebergement: number, payload: RequeteTarifModif): Promise<ReponseTarifModif>;
   listWebhooks(): Promise<DossierWebhookListe>;
-  addWebhook(payload: DossierWebhookAjout): Promise<Record<string, unknown>>;
-  deleteWebhook(payload: DossierWebhookSuppr): Promise<Record<string, unknown>>;
+  addWebhook(payload: DossierWebhookAjout): Promise<ReponseWebhookAjout>;
+  deleteWebhook(payload: DossierWebhookSuppr): Promise<ReponseWebhookSuppr>;
 }
 
 export type ClientByRole<R extends Role> = R extends 'customer'
@@ -353,7 +356,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async setRates(idFournisseur, idHebergement, payload) {
-      const resp = await requestJson<ApiResponse<{ warnings?: unknown[] } | Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseTarifModif>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/tarif`,
         {
@@ -364,7 +367,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async listWebhooks() {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<DossierWebhookListe>>(
         config,
         `/config/dossier/webhooks`,
         { method: 'GET' }
@@ -372,7 +375,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async addWebhook(payload) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseWebhookAjout>>(
         config,
         `/config/dossier/webhooks`,
         { method: 'POST', body: JSON.stringify(payload) }
@@ -380,7 +383,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async deleteWebhook(payload) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseWebhookSuppr>>(
         config,
         `/config/dossier/webhooks`,
         { method: 'DELETE', body: JSON.stringify(payload) }

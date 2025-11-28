@@ -217,6 +217,12 @@ export type RequeteTarifModif = {
   tarifs: TarifModif[];
 };
 
+export type ReponseTarifModif = {
+  warnings?: Array<{ code?: string; detail?: string }>;
+  idHebergement?: number;
+  applied?: boolean;
+} & Record<string, unknown>;
+
 // Dossiers list query params (subset from Swagger)
 export type ListBookingsParams = {
   dateCreationDepuis?: string;    // date-time
@@ -242,6 +248,15 @@ export type DossierWebhookSuppr = {
 export type DossierWebhookListe = {
   webhooks?: Array<{ url: string; emailAlerte?: string }>;
 };
+
+export type ReponseWebhookAjout = {
+  url?: string;
+  emailAlerte?: string;
+} & Record<string, unknown>;
+
+export type ReponseWebhookSuppr = {
+  success?: boolean;
+} & Record<string, unknown>;
 
 // =====================
 // Deeper nested schemas
