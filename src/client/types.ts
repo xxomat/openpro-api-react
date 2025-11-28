@@ -210,7 +210,7 @@ export type TarifModif = {
   dureeMax: number;
   arriveeAutorisee: boolean;
   departAutorise: boolean;
-  tarifPax: Record<string, unknown>;
+  tarifPax: TarifPax;
 };
 
 export type RequeteTarifModif = {
