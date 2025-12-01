@@ -9,9 +9,9 @@ import {
   Booking,
   BookingList,
   RateTypeListResponse,
-  RatesResponse,
   RatesListResponse,
   ListBookingsParams,
+  ListRatesDatesParams,
   DossierWebhookAjout,
   DossierWebhookSuppr,
   DossierWebhookListe,
@@ -22,7 +22,11 @@ import {
   ReponseTarifModif,
   ReponseLiaisonHebergementTypeTarifListe,
   ReponseWebhookAjout,
-  ReponseWebhookSuppr
+  ReponseWebhookSuppr,
+  StockUpdatePayload,
+  ReponseTypeTarifModif,
+  ReponseTypeTarifSuppr,
+  ReponseLiaisonHebergementTypeTarif
 } from './types';
 
 type Role = 'customer' | 'admin';
@@ -153,7 +157,7 @@ export interface CustomerSurface {
   listAccommodations(idFournisseur: number): Promise<AccommodationListResponse>;
   listBookings(idFournisseur: number, params?: ListBookingsParams): Promise<BookingList>;
   getBooking(idFournisseur: number, idDossier: number): Promise<Booking>;
-  getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>): Promise<RatesListResponse>;
+  getRates(idFournisseur: number, idHebergement: number, params?: ListRatesDatesParams): Promise<RatesListResponse>;
   getStock(idFournisseur: number, idHebergement: number, params?: { debut?: string; fin?: string }): Promise<import('./types').StockResponse>;
   // TODO: add read endpoints required by the widget (bookings, rates reading if provided)
 }
@@ -164,7 +168,7 @@ export interface AdminSurface {
   updateStock(
     idFournisseur: number,
     idHebergement: number,
-    payload: unknown
+    payload: StockUpdatePayload
   ): Promise<void>;
   listRateTypes(idFournisseur: number): Promise<RateTypeListResponse>;
   createRateType(idFournisseur: number, payload: TypeTarifAjout): Promise<ReponseTypeTarifAjout>;
@@ -231,7 +235,7 @@ export function createOpenProClient<R extends Role>(
       // Retourner directement le dossier pour compatibilité avec le code existant
       return detailResponse.dossier;
     },
-    async getRates(idFournisseur: number, idHebergement: number, params?: Record<string, unknown>) {
+    async getRates(idFournisseur: number, idHebergement: number, params?: ListRatesDatesParams) {
       const search = toSearchParams(params);
       const resp = await requestJson<ApiResponse<RatesListResponse>>(
         config,
@@ -252,32 +256,27 @@ export function createOpenProClient<R extends Role>(
   };
 
   const admin: AdminSurface = {
-    async updateStock(idFournisseur, idHebergement, payload) {
+    async updateStock(idFournisseur, idHebergement, payload: StockUpdatePayload) {
       // Transformer le payload de { jours: [{ date, dispo }] } vers { listeStock: [{ date, valeur }] }
       // selon l'API OpenPro qui attend listeStock avec valeur (pas stock)
       let transformedPayload: { listeStock: Array<{ date: string; valeur: number }> };
       
-      if (payload && typeof payload === 'object' && 'jours' in payload && Array.isArray((payload as any).jours)) {
+      if ('jours' in payload && Array.isArray(payload.jours)) {
         // Format backend: { jours: [{ date, dispo }] } -> Format OpenPro: { listeStock: [{ date, valeur }] }
         transformedPayload = {
-          listeStock: ((payload as any).jours as Array<{ date: string; dispo: number }>).map(j => ({
+          listeStock: payload.jours.map(j => ({
             date: j.date,
             valeur: j.dispo
           }))
         };
-      } else if (payload && typeof payload === 'object' && 'listeStock' in payload) {
+      } else if ('listeStock' in payload && Array.isArray(payload.listeStock)) {
         // Déjà au format listeStock, mais il faut s'assurer que c'est 'valeur' et non 'stock'
-        const listeStock = (payload as any).listeStock;
-        if (Array.isArray(listeStock)) {
-          transformedPayload = {
-            listeStock: listeStock.map((item: any) => ({
-              date: item.date,
-              valeur: item.valeur ?? item.stock ?? item.dispo
-            }))
-          };
-        } else {
-          transformedPayload = payload as { listeStock: Array<{ date: string; valeur: number }> };
-        }
+        transformedPayload = {
+          listeStock: payload.listeStock.map(item => ({
+            date: item.date,
+            valeur: item.valeur
+          }))
+        };
       } else {
         // Format inconnu, essayer de passer tel quel (pour compatibilité)
         transformedPayload = payload as { listeStock: Array<{ date: string; valeur: number }> };
@@ -313,7 +312,7 @@ export function createOpenProClient<R extends Role>(
       return unwrapOk(resp);
     },
     async updateRateType(idFournisseur, idTypeTarif, payload) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseTypeTarifModif>>(
         config,
         `/fournisseur/${idFournisseur}/typetarifs/${idTypeTarif}`,
         {
@@ -324,7 +323,7 @@ export function createOpenProClient<R extends Role>(
       unwrapOk(resp);
     },
     async deleteRateType(idFournisseur, idTypeTarif) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseTypeTarifSuppr>>(
         config,
         `/fournisseur/${idFournisseur}/typetarifs/${idTypeTarif}`,
         { method: 'DELETE' }
@@ -332,7 +331,7 @@ export function createOpenProClient<R extends Role>(
       unwrapOk(resp);
     },
     async linkRateTypeToAccommodation(idFournisseur, idHebergement, idTypeTarif) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseLiaisonHebergementTypeTarif>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/${idTypeTarif}`,
         { method: 'POST' }
@@ -340,7 +339,7 @@ export function createOpenProClient<R extends Role>(
       unwrapOk(resp);
     },
     async unlinkRateTypeFromAccommodation(idFournisseur, idHebergement, idTypeTarif) {
-      const resp = await requestJson<ApiResponse<Record<string, unknown>>>(
+      const resp = await requestJson<ApiResponse<ReponseLiaisonHebergementTypeTarif>>(
         config,
         `/fournisseur/${idFournisseur}/hebergements/${idHebergement}/typetarifs/${idTypeTarif}`,
         { method: 'DELETE' }

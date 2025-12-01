@@ -155,12 +155,6 @@ export type RateTypeListResponse = {
   typeTarifs?: RateType[];
 } & Record<string, unknown>;
 
-export type Tarif = Record<string, unknown>;
-export type RatesResponse = {
-  // per Swagger ReponseTarifListe -> data.tarifs
-  tarifs?: Tarif[];
-} & Record<string, unknown>;
-
 export type Warning = {
   code?: string;
   detail?: string;
@@ -184,11 +178,25 @@ export type ReponseTypeTarifAjout = {
   idTypeTarif: number;
 };
 
+export type ReponseTypeTarifModif = {
+  idTypeTarif: number;
+  updatedAt?: string;
+} & Record<string, unknown>;
+
+export type ReponseTypeTarifSuppr = {
+  success?: boolean;
+} & Record<string, unknown>;
+
 export type ReponseTypeTarifListe = {
   typeTarifs: RateType[];
 };
 
-export type LiaisonResponse = Record<string, unknown>;
+export type ReponseLiaisonHebergementTypeTarif = {
+  linked?: boolean;
+  unlinked?: boolean;
+  idHebergement: number;
+  idTypeTarif: number;
+} & Record<string, unknown>;
 
 // Liaison hébergement - type de tarif (selon Swagger)
 export type LiaisonHebergementTypeTarif = {
@@ -233,6 +241,12 @@ export type ListBookingsParams = {
   nbParPage?: number;
 };
 
+// Tarifs list query params (dates de filtrage)
+export type ListRatesDatesParams = {
+  debut?: string;  // YYYY-MM-DD
+  fin?: string;    // YYYY-MM-DD
+};
+
 // Webhook types
 export type DossierWebhookAjout = {
   // exact fields per Swagger RequeteDossierWebhookAjout
@@ -272,6 +286,10 @@ export type StockResponse = {
   // The Swagger points to ReponseStock; keeping flexible but structured
   listeStock: StockJour[];
 } & Record<string, unknown>;
+
+export type StockUpdatePayload = 
+  | { listeStock: Array<{ date: string; valeur: number }> }  // Format OpenPro
+  | { jours: Array<{ date: string; dispo: number }> };       // Format backend (compatibilité)
 
 // Tarifs (read)
 export type TarifPaxOccupation = {
